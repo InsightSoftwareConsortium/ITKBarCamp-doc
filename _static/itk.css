@@ -1,0 +1,10 @@
+@import url("default.css");
+
+div.darkbody {
+    background-color: black;
+    color: white;
+}
+
+td.contentstable {
+  padding-right: 30px;
+}
