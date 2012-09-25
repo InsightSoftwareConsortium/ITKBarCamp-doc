@@ -59,19 +59,32 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Your first ITK program</div></blockquote>
+<div>Your first ITK program.</div></blockquote>
 </div>
 <div class="section" id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><pre>#include "itkImage.hxx"
+<p>hello-itk.cxx:</p>
+<div class="highlight-python"><pre>#include "itkImage.h"
 
 int main()
 {
   typedef itk::Image&lt; char, 2 &gt;  ImageType;
   ImageType::Pointer image = ImageType::New();
   std::cout &lt;&lt; "Hello World ITK !" &lt;&lt; std::endl;
+  std::cout &lt;&lt; image &lt;&lt; std::endl;
   return EXIT_SUCCESS;
 }</pre>
+</div>
+<p>CMakeLists.txt:</p>
+<div class="highlight-python"><pre>cmake_minimum_required( VERSION 2.8 )
+enable_testing()
+
+find_package( ITK REQUIRED )
+include( ${ITK_USE_FILE} )
+
+add_executable( hello-itk hello-itk.cxx )
+target_link_libraries( hello-itk ${ITK_LIBRARIES} )
+add_test( hello-itk-test hello-itk )</pre>
 </div>
 </div>
 </div>
