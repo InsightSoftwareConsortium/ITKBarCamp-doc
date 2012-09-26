@@ -55,18 +55,18 @@
           <div class="body">
             
   <div class="section" id="test-a-release-candidate">
-<h1>Test a Release Candidate<a class="headerlink" href="#test-a-release-candidate" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>Test a Release Candidate<a class="headerlink" href="#test-a-release-candidate" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Release candidate&#8217;s (RCs) or pre-release announcements intended to allow the
+<div>Release candidates (RC&#8217;s), or pre-release announcements, are intended to allow the
 community to test changes, provide feedback, and make improvements before the
 final release.  This session describes how to test and provide feedback for an
 RC.</div></blockquote>
 </div>
 <div class="section" id="getting-the-code">
 <h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
-<p>Release candidates are released using the revision control system, <a class="reference external" href="http://git-scm.com/">Git</a>.  Git
+<p>Release candidates are distributed using the revision control system, <a class="reference external" href="http://git-scm.com/">Git</a>.  Git
 must be downloaded and installed.  To obtain the source code, clone the
 repository in a Git shell:</p>
 <div class="highlight-python"><pre>git clone git://itk.org/ITK.git
@@ -74,7 +74,7 @@ cd ITK</pre>
 </div>
 <p>Next, checkout the revision identifying the release candidate.  This revision is
 identified in the release candidate announcement sent to the mailing list.  It
-will be a Git tag for a minor version release candidate or the release branch
+will be a git tag for a minor version release candidate or the <em>release</em> branch
 for patch version pre-release.  For example:</p>
 <div class="highlight-python"><pre>git checkout v4.2rc04</pre>
 </div>
@@ -86,15 +86,15 @@ for patch version pre-release.  For example:</p>
 <h2>What to do with the code<a class="headerlink" href="#what-to-do-with-the-code" title="Permalink to this headline">¶</a></h2>
 <p>Build the code with the compiler you use for development.  Use the same CMake
 options that you use in development.  Build and test the programs you have
-written that use ITK or the projects that you use that depend on ITK.  Report an
-issues found to the mailing lists and issue tracker.</p>
+written that use ITK or the projects that you use that depend on ITK.  Report
+any issues found to the mailing lists and issue tracker.</p>
 <p>Perform an Experimental submission to the dashboard with:</p>
 <div class="highlight-python"><pre>ctest -D Experimental</pre>
 </div>
 <p>on Linux/Mac, or:</p>
 <div class="highlight-python"><pre>ctest -D Experimental -C Release</pre>
 </div>
-<p>for Visual Studio.  This command must be executed from the build tree.</p>
+<p>for Visual Studio.  This command must be executed from the top of the build tree.</p>
 <p>After running an Experimental submission, summarize your results in a reply to
 the RC announcement thread on the mailing list.</p>
 </div>
@@ -162,7 +162,7 @@ the RC announcement thread on the mailing list.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, InsightSoftwareConsortium.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
