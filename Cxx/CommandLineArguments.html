@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Hello World &mdash; ITKBarCamp  documentation</title>
+    <title>Command Line Arguments &mdash; ITKBarCamp  documentation</title>
     
     <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,10 +26,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
-    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
-    <link rel="up" title="C++ Development" href="index.html" />
-    <link rel="next" title="Wanted Sessions" href="Wanted.html" />
-    <link rel="prev" title="C++ Development" href="index.html" /> 
+    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,14 +35,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="Wanted.html" title="Wanted Sessions"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="C++ Development"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">C++ Development</a> &raquo;</li> 
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,29 +44,66 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="hello-world">
-<span id="index-0"></span><h1>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="command-line-arguments">
+<span id="index-0"></span><h1>Command Line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>This page provides a minimal example of C++ code.</div></blockquote>
+<div>This page describes how to use command line arguments in C++</div></blockquote>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><pre>#include &lt;iostream&gt;
 
-int main()
+int main( int argc, char * argv [] )
 {
-std::cout &lt;&lt; "Hello World" &lt;&lt; std::endl;
+std::cout &lt;&lt; "Number of arguments = " &lt;&lt; argc &lt;&lt; std::endl;
+for(int i=0; i&lt;argc; i++)
+  {
+  std::cout &lt;&lt; argv[i] &lt;&lt; std::endl;
+  }
 return 0;
 }</pre>
 </div>
+<p>This example takes the list of command line arguments and prints them back to
+the terminal.</p>
+<p>Note that the list of command line arguments in the array argv includes the
+name of the executable itself. This name is passed as the first element of the
+array.</p>
+</div>
+<div class="section" id="id1">
+<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>#include &lt;iostream&gt;
+#include &lt;stdlib.h&gt;
+
+int main( int argc, char * argv [] )
+{
+std::cout &lt;&lt; "Number of arguments = " &lt;&lt; argc &lt;&lt; std::endl;
+
+std::cout &lt;&lt; "Executable name " &lt;&lt; argv[0] &lt;&lt; std::endl;
+std::cout &lt;&lt; "First argumant  " &lt;&lt; argv[1] &lt;&lt; std::endl;
+
+int   i = atoi( argv[1] );
+float f = atof( argv[1] );
+
+std::cout &lt;&lt; "Integer form = " &lt;&lt; i &lt;&lt; std::endl;
+std::cout &lt;&lt; "Float   form = " &lt;&lt; f &lt;&lt; std::endl;
+
+return 0;
+}</pre>
+</div>
+<p>This example take the first element of the argv array and prints it as the
+executable filename. Then it takes the second element of the array, which
+corresponds to the first command line argument, and prints it as such.</p>
+<p>Finally, it uses the atoi() and atof() functions to illustrates how the command
+line argument strings can be converted to numbers that are explicitly of type
+int and float.</p>
 </div>
 <div class="section" id="video">
 <h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
 <p>You can see the video of this example at:</p>
 <blockquote>
-<div><iframe src="http://www.youtube.com/embed/ZZ56hu9pKG4" style="border: 0; height: 345px; width: 560px">
+<div><iframe src="http://www.youtube.com/embed/3iATEcmhB8w" style="border: 0; height: 345px; width: 560px">
 </iframe></div></blockquote>
 </div>
 </div>
@@ -89,23 +116,18 @@ return 0;
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Hello World</a><ul>
+<li><a class="reference internal" href="#">Command Line Arguments</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#id1">Examples</a></li>
 <li><a class="reference internal" href="#video">Video</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">C++ Development</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="Wanted.html"
-                        title="next chapter">Wanted Sessions</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/Cxx/HelloWorld.txt"
+    <li><a href="../_sources/Cxx/CommandLineArguments.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -131,14 +153,7 @@ return 0;
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="Wanted.html" title="Wanted Sessions"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="C++ Development"
-             >previous</a> |</li>
-        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
-          <li><a href="index.html" >C++ Development</a> &raquo;</li> 
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
