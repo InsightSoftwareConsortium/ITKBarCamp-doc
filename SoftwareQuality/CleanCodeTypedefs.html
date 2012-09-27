@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Clean Code: typedef’s &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
+    <link rel="up" title="Software Quality" href="index.html" />
+    <link rel="next" title="Unit Testing" href="UnitTesting.html" />
+    <link rel="prev" title="Software Quality" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="UnitTesting.html" title="Unit Testing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Software Quality"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Software Quality</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="clean-code-typedef-s">
+<span id="index-0"></span><h1>Clean Code: typedef&#8217;s<a class="headerlink" href="#clean-code-typedef-s" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>We describe why and how to use <a class="reference external" href="http://www.cplusplus.com/doc/tutorial/other_data_types/">typedef</a>&#8216;s in C++ development with examples from
+ITK.</div></blockquote>
+</div>
+<div class="section" id="why-typedef-usage-is-important">
+<h2>Why typedef Usage is Important<a class="headerlink" href="#why-typedef-usage-is-important" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reason-number-1-maintainability">
+<h3>Reason Number 1: Maintainability<a class="headerlink" href="#reason-number-1-maintainability" title="Permalink to this headline">¶</a></h3>
+<p>Using <a class="reference external" href="http://www.cplusplus.com/doc/tutorial/other_data_types/">typedef</a>&#8216;s instead of explicit types is analogous to using variables
+instead of explicit numbers in your code.  If the type used for a certain
+purpose need to be changed, then only the typedef line needs to be changed.  If
+typedef&#8217;s are not used, thousands of manual changes to the code may be required
+to achieve this simple logical operation.</p>
+<p>This advantage of typedefs becomes increasing important when dealing with
+complex types that are defined in terms of simple types in a nested way.  This
+is common with advanced data structures and templated code.</p>
+<p>By abstracting types, typedefs can also decimate the number of characters to
+type when coding, which reduces development time.</p>
+</div>
+<div class="section" id="reason-number-2-readability">
+<h3>Reason Number 2: Readability<a class="headerlink" href="#reason-number-2-readability" title="Permalink to this headline">¶</a></h3>
+<p>C++ is a strongly typed language.  While this increases the verbosity of the
+language, it also provides an opportunity to create more readable code if the
+names of the types lend insight into the meaning and intended use of a type.</p>
+<p>A typedef also allows types to be collected into higher-level abstractions.
+This eases logical comprehension.</p>
+</div>
+</div>
+<div class="section" id="how-to-use-typedef-s-to-improve-software-quality">
+<h2>How to Use typedef&#8217;s to Improve Software Quality<a class="headerlink" href="#how-to-use-typedef-s-to-improve-software-quality" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sidebar-the-typename-keyword">
+<h3>Sidebar: The typename Keyword<a class="headerlink" href="#sidebar-the-typename-keyword" title="Permalink to this headline">¶</a></h3>
+<p>If new to templated C++ code, you may come across confusing compiler errors
+related to &#8220;dependent types&#8221; or &#8220;typename&#8217;s&#8221;.  In these cases, the C++ <a class="reference external" href="http://pages.cs.wisc.edu/~driscoll/typename.html">typename</a>
+keyword needs to be used.  The <a class="reference external" href="http://pages.cs.wisc.edu/~driscoll/typename.html">typename</a> keywords needs to be used for types
+that depend on template parameters, so-called qualified (the scope is defined)
+dependent types.  For example, if a function is templated
+over a pixel type, and an <em>itk::Image</em> type is defined with that template parameter, then the typename keyword must be used:</p>
+<div class="highlight-python"><pre>template&lt; class TPixel &gt;
+void findGremlins( itk::Image&lt; TPixel, 2 &gt; * image )
+{
+typedef itk::Image&lt; TPixel, 2 &gt;        ImageType;
+typedef typename ImageType::IndexType  IndexType;
+...</pre>
+</div>
+<p>If there is not a template, however, the typename keyword should not be used:</p>
+<div class="highlight-python"><pre>void findGremlins( itk::Image&lt; float, 2 &gt; * image )
+{
+typedef float                          PixelType;
+typedef itk::Image&lt; PixelType, 2 &gt;     ImageType;
+typedef ImageType::IndexType           IndexType;
+...</pre>
+</div>
+</div>
+<div class="section" id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h3>
+<p>Standard naming conventions for typedef&#8217;s defined within a class allow for reuse
+in templated applications.  Some of the standard typedef&#8217;s defined for all ITK
+classes are <em>Self</em>, <em>Superclass</em>, <em>Pointer</em>, and <em>ConstPointer</em>.</p>
+<p>Use a typedef for each new type created in the code made from a template.
+Give the typedef a meaningful, succinct name.</p>
+<p>Sometimes, typedefs should also be created for simple types.  Again, a uniquely
+identifiable, meaningful name for a type increases maintainablity and
+readability.</p>
+</div>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>Improve the following code by using typedef&#8217;s:</p>
+<div class="highlight-python"><pre>// Create and setup a reader
+typedef itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;  ReaderType;
+itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;::Pointer reader =
+  itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;::New();
+reader-&gt;SetFileName( argv[1] );
+
+itk::GradientMagnitudeImageFilter&lt; itk::Image&lt; unsigned char, 2 &gt;,
+  itk::Image&lt; float, 2 &gt; &gt;::Pointer edgeStrengthFilter =
+  itk::GradientMagnitudeImageFilter&lt; itk::Image&lt; unsigned char, 2 &gt;,
+    itk::Image&lt; float, 2 &gt; &gt;::New();
+edgeStrengthFilter-&gt;SetInput( reader-&gt;GetOutput() );
+
+itk::ImageFileWriter&lt; itk::Image&lt; float, 2 &gt; &gt;::Pointer writer =
+  itk::ImageFileWriter&lt; itk::Image&lt; float, 2 &gt; &gt;::New();
+writer-&gt;SetFileName( argv[2] );
+writer-&gt;SetInput( edgeStrengthFilter-&gt;GetOutput() );
+writer-&gt;Update();</pre>
+</div>
+<p>Answer:</p>
+<div class="highlight-python"><pre>const unsigned int Dimension = 2;
+
+typedef unsigned char                            InputPixelType;
+typedef itk::Image&lt; InputPixelType, Dimension &gt;  InputImageType;
+
+typedef float                                    OutputPixelType;
+typedef itk::Image&lt; OutputPixelType, Dimension &gt; OutputImageType;
+
+typedef itk::ImageFileReader&lt; InputImageType &gt;  ReaderType;
+ReaderType::Pointer reader = ReaderType::New();
+reader-&gt;SetFileName( argv[1] );
+
+typedef itk::GradientMagnitudeImageFilter&lt;
+    InputImageType, OutputImageType &gt;  EdgeStrengthFilterType;
+EdgeStrengthFilterType::Pointer edgeStrengthFilter = EdgeStrengthFilterType::New();
+edgeStrengthFilter-&gt;SetInput( reader-&gt;GetOutput() );
+
+typedef itk::ImageFileWriter&lt; OutputImageType &gt; WriterType;
+WriterType::Pointer writer = WriterType::New();
+writer-&gt;SetFileName( argv[2] );
+writer-&gt;SetInput( edgeStrengthFilter-&gt;GetOutput() );
+writer-&gt;Update();</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Clean Code: typedef&#8217;s</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#why-typedef-usage-is-important">Why typedef Usage is Important</a><ul>
+<li><a class="reference internal" href="#reason-number-1-maintainability">Reason Number 1: Maintainability</a></li>
+<li><a class="reference internal" href="#reason-number-2-readability">Reason Number 2: Readability</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-use-typedef-s-to-improve-software-quality">How to Use typedef&#8217;s to Improve Software Quality</a><ul>
+<li><a class="reference internal" href="#sidebar-the-typename-keyword">Sidebar: The typename Keyword</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise">Exercise</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Software Quality</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="UnitTesting.html"
+                        title="next chapter">Unit Testing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/SoftwareQuality/CleanCodeTypedefs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="UnitTesting.html" title="Unit Testing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Software Quality"
+             >previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" >Software Quality</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
