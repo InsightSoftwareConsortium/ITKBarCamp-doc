@@ -96,20 +96,22 @@ keyword needs to be used.  The <a class="reference external" href="http://pages.
 that depend on template parameters, so-called qualified (the scope is defined)
 dependent types.  For example, if a function is templated
 over a pixel type, and an <em>itk::Image</em> type is defined with that template parameter, then the typename keyword must be used:</p>
-<div class="highlight-python"><pre>template&lt; class TPixel &gt;
-void findGremlins( itk::Image&lt; TPixel, 2 &gt; * image )
-{
-typedef itk::Image&lt; TPixel, 2 &gt;        ImageType;
-typedef typename ImageType::IndexType  IndexType;
-...</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span><span class="o">&lt;</span> <span class="k">class</span> <span class="nc">TPixel</span> <span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">findGremlins</span><span class="p">(</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">TPixel</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">*</span> <span class="n">image</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">TPixel</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span>        <span class="n">ImageType</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="k">typename</span> <span class="n">ImageType</span><span class="o">::</span><span class="n">IndexType</span>  <span class="n">IndexType</span><span class="p">;</span>
+<span class="p">...</span>
+</pre></div>
 </div>
 <p>If there is not a template, however, the typename keyword should not be used:</p>
-<div class="highlight-python"><pre>void findGremlins( itk::Image&lt; float, 2 &gt; * image )
-{
-typedef float                          PixelType;
-typedef itk::Image&lt; PixelType, 2 &gt;     ImageType;
-typedef ImageType::IndexType           IndexType;
-...</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="kt">void</span> <span class="n">findGremlins</span><span class="p">(</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">float</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">*</span> <span class="n">image</span> <span class="p">)</span>
+<span class="p">{</span>
+<span class="k">typedef</span> <span class="kt">float</span>                          <span class="n">PixelType</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">PixelType</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span>     <span class="n">ImageType</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ImageType</span><span class="o">::</span><span class="n">IndexType</span>           <span class="n">IndexType</span><span class="p">;</span>
+<span class="p">...</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="best-practices">
@@ -127,49 +129,53 @@ readability.</p>
 <div class="section" id="exercise">
 <h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
 <p>Improve the following code by using typedef&#8217;s:</p>
-<div class="highlight-python"><pre>// Create and setup a reader
-typedef itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;  ReaderType;
-itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;::Pointer reader =
-  itk::ImageFileReader&lt; itk::Image&lt; unsigned char, 2 &gt; &gt;::New();
-reader-&gt;SetFileName( argv[1] );
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">itk</span><span class="o">::</span><span class="n">ImageFileReader</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">Pointer</span> <span class="n">reader</span> <span class="o">=</span>
+  <span class="n">itk</span><span class="o">::</span><span class="n">ImageFileReader</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">reader</span><span class="o">-&gt;</span><span class="n">SetFileName</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
 
-itk::GradientMagnitudeImageFilter&lt; itk::Image&lt; unsigned char, 2 &gt;,
-  itk::Image&lt; float, 2 &gt; &gt;::Pointer edgeStrengthFilter =
-  itk::GradientMagnitudeImageFilter&lt; itk::Image&lt; unsigned char, 2 &gt;,
-    itk::Image&lt; float, 2 &gt; &gt;::New();
-edgeStrengthFilter-&gt;SetInput( reader-&gt;GetOutput() );
+<span class="n">itk</span><span class="o">::</span><span class="n">GradientMagnitudeImageFilter</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span><span class="p">,</span>
+  <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">float</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">Pointer</span> <span class="n">edgeStrengthFilter</span> <span class="o">=</span>
+  <span class="n">itk</span><span class="o">::</span><span class="n">GradientMagnitudeImageFilter</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">float</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">edgeStrengthFilter</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">reader</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
 
-itk::ImageFileWriter&lt; itk::Image&lt; float, 2 &gt; &gt;::Pointer writer =
-  itk::ImageFileWriter&lt; itk::Image&lt; float, 2 &gt; &gt;::New();
-writer-&gt;SetFileName( argv[2] );
-writer-&gt;SetInput( edgeStrengthFilter-&gt;GetOutput() );
-writer-&gt;Update();</pre>
+<span class="n">itk</span><span class="o">::</span><span class="n">ImageFileWriter</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">float</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">Pointer</span> <span class="n">writer</span> <span class="o">=</span>
+  <span class="n">itk</span><span class="o">::</span><span class="n">ImageFileWriter</span><span class="o">&lt;</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">float</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">SetFileName</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">);</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">edgeStrengthFilter</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>Answer:</p>
-<div class="highlight-python"><pre>const unsigned int Dimension = 2;
+<div class="highlight-c++"><div class="highlight"><pre><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">Dimension</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
-typedef unsigned char                            InputPixelType;
-typedef itk::Image&lt; InputPixelType, Dimension &gt;  InputImageType;
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">char</span>                            <span class="n">InputPixelType</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">InputPixelType</span><span class="p">,</span> <span class="n">Dimension</span> <span class="o">&gt;</span>  <span class="n">InputImageType</span><span class="p">;</span>
 
-typedef float                                    OutputPixelType;
-typedef itk::Image&lt; OutputPixelType, Dimension &gt; OutputImageType;
+<span class="k">typedef</span> <span class="kt">float</span>                                    <span class="n">OutputPixelType</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">OutputPixelType</span><span class="p">,</span> <span class="n">Dimension</span> <span class="o">&gt;</span> <span class="n">OutputImageType</span><span class="p">;</span>
 
-typedef itk::ImageFileReader&lt; InputImageType &gt;  ReaderType;
-ReaderType::Pointer reader = ReaderType::New();
-reader-&gt;SetFileName( argv[1] );
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">ImageFileReader</span><span class="o">&lt;</span> <span class="n">InputImageType</span> <span class="o">&gt;</span>  <span class="n">ReaderType</span><span class="p">;</span>
+<span class="n">ReaderType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">ReaderType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">reader</span><span class="o">-&gt;</span><span class="n">SetFileName</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
 
-typedef itk::GradientMagnitudeImageFilter&lt;
-    InputImageType, OutputImageType &gt;  EdgeStrengthFilterType;
-EdgeStrengthFilterType::Pointer edgeStrengthFilter = EdgeStrengthFilterType::New();
-edgeStrengthFilter-&gt;SetInput( reader-&gt;GetOutput() );
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">GradientMagnitudeImageFilter</span><span class="o">&lt;</span>
+    <span class="n">InputImageType</span><span class="p">,</span> <span class="n">OutputImageType</span> <span class="o">&gt;</span>  <span class="n">EdgeStrengthFilterType</span><span class="p">;</span>
+<span class="n">EdgeStrengthFilterType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">edgeStrengthFilter</span> <span class="o">=</span> <span class="n">EdgeStrengthFilterType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">edgeStrengthFilter</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">reader</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
 
-typedef itk::ImageFileWriter&lt; OutputImageType &gt; WriterType;
-WriterType::Pointer writer = WriterType::New();
-writer-&gt;SetFileName( argv[2] );
-writer-&gt;SetInput( edgeStrengthFilter-&gt;GetOutput() );
-writer-&gt;Update();</pre>
+<span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">ImageFileWriter</span><span class="o">&lt;</span> <span class="n">OutputImageType</span> <span class="o">&gt;</span> <span class="n">WriterType</span><span class="p">;</span>
+<span class="n">WriterType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">WriterType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">SetFileName</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">);</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">edgeStrengthFilter</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
+<span class="n">writer</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+</pre></div>
 </div>
 </div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+<iframe src="http://www.youtube.com/embed/2az2esjo19U" style="border: 0; height: 345px; width: 560px">
+</iframe></div>
 </div>
 
 
@@ -193,6 +199,7 @@ writer-&gt;Update();</pre>
 </ul>
 </li>
 <li><a class="reference internal" href="#exercise">Exercise</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
 </ul>
 </li>
 </ul>

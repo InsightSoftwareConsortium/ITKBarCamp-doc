@@ -29,7 +29,7 @@
     <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
     <link rel="up" title="Software Quality" href="index.html" />
     <link rel="next" title="Wanted Sessions" href="Wanted.html" />
-    <link rel="prev" title="Software Quality" href="index.html" /> 
+    <link rel="prev" title="Clean Code: typedef’s" href="CleanCodeTypedefs.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,7 +42,7 @@
           <a href="Wanted.html" title="Wanted Sessions"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Software Quality"
+          <a href="CleanCodeTypedefs.html" title="Clean Code: typedef’s"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Software Quality</a> &raquo;</li> 
@@ -64,26 +64,28 @@
 <div class="section" id="first-write-the-test-for-an-empty-class">
 <h2>First: Write the Test for an empty class<a class="headerlink" href="#first-write-the-test-for-an-empty-class" title="Permalink to this headline">¶</a></h2>
 <p>Here is the test for a Calculator class.</p>
-<div class="highlight-python"><pre>#include &lt;iostream&gt;
-#include "Calculator.h"
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &quot;Calculator.h&quot;</span>
 
-int main()
-{
-  Calculator calc;
-  return 0;
-}</pre>
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">Calculator</span> <span class="n">calc</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="second-write-the-class-with-no-methods">
 <h2>Second: Write The class with no methods<a class="headerlink" href="#second-write-the-class-with-no-methods" title="Permalink to this headline">¶</a></h2>
 <p>Put the following in a file called Calculator.h</p>
-<div class="highlight-python"><pre>class Calculator
-{
-public:
+<div class="highlight-c++"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Calculator</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
 
-private:
+<span class="k">private</span><span class="o">:</span>
 
-};</pre>
+<span class="p">};</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -105,8 +107,8 @@ private:
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Software Quality</a></p>
+  <p class="topless"><a href="CleanCodeTypedefs.html"
+                        title="previous chapter">Clean Code: typedef&#8217;s</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Wanted.html"
                         title="next chapter">Wanted Sessions</a></p>
@@ -142,7 +144,7 @@ private:
           <a href="Wanted.html" title="Wanted Sessions"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Software Quality"
+          <a href="CleanCodeTypedefs.html" title="Clean Code: typedef’s"
              >previous</a> |</li>
         <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="index.html" >Software Quality</a> &raquo;</li> 
