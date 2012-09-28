@@ -73,17 +73,20 @@ RC.</div></blockquote>
 <p>Release candidates are distributed using the revision control system, <a class="reference external" href="http://git-scm.com/">Git</a>.  Git
 must be downloaded and installed.  To obtain the source code, clone the
 repository in a Git shell:</p>
-<div class="highlight-python"><pre>git clone git://itk.org/ITK.git
-cd ITK</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//itk.org/ITK.git</span>
+<span class="n">cd</span> <span class="n">ITK</span>
+</pre></div>
 </div>
 <p>Next, checkout the revision identifying the release candidate.  This revision is
 identified in the release candidate announcement sent to the mailing list.  It
 will be a git tag for a minor version release candidate or the <em>release</em> branch
 for patch version pre-release.  For example:</p>
-<div class="highlight-python"><pre>git checkout v4.2rc04</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">git</span> <span class="n">checkout</span> <span class="n">v4</span><span class="mf">.2</span><span class="n">rc04</span>
+</pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-python"><pre>git checkout -b release origin/release</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">release</span> <span class="n">origin</span><span class="o">/</span><span class="n">release</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="what-to-do-with-the-code">
@@ -93,10 +96,12 @@ options that you use in development.  Build and test the programs you have
 written that use ITK or the projects that you use that depend on ITK.  Report
 any issues found to the mailing lists and issue tracker.</p>
 <p>Perform an Experimental submission to the dashboard with:</p>
-<div class="highlight-python"><pre>ctest -D Experimental</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">ctest</span> <span class="o">-</span><span class="n">D</span> <span class="n">Experimental</span>
+</pre></div>
 </div>
 <p>on Linux/Mac, or:</p>
-<div class="highlight-python"><pre>ctest -D Experimental -C Release</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">ctest</span> <span class="o">-</span><span class="n">D</span> <span class="n">Experimental</span> <span class="o">-</span><span class="n">C</span> <span class="n">Release</span>
+</pre></div>
 </div>
 <p>for Visual Studio.  This command must be executed from the top of the build tree.</p>
 <p>After running an Experimental submission, summarize your results in a reply to

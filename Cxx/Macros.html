@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Macros &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
+    <link rel="up" title="C++ Development" href="index.html" />
+    <link rel="next" title="Wanted Sessions" href="Wanted.html" />
+    <link rel="prev" title="Command Line Arguments" href="CommandLineArguments.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Wanted.html" title="Wanted Sessions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="CommandLineArguments.html" title="Command Line Arguments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">C++ Development</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="macros">
+<span id="index-0"></span><h1>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This page provides an introduction to the use of macros in C++.</p>
+<p>Macros are typically used in one of the following four ways</p>
+<ul class="simple">
+<li>As a replacement for symbols</li>
+<li>As logical flags to do selective compilation</li>
+<li>As on-the-fly code generation</li>
+<li>As accelerators for function-like operations</li>
+</ul>
+<p>Let&#8217;s go through them.</p>
+</div></blockquote>
+</div>
+<div class="section" id="as-symbols">
+<h2>As Symbols<a class="headerlink" href="#as-symbols" title="Permalink to this headline">¶</a></h2>
+<p>Macros can be used as a way of replacing symbols</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="cp">#define NUMBEROFCOWS 42</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Number of Cows = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">NUMBEROFCOWS</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The #define command is a pre-processor command and it is used to define the
+macro NUMBEROFCOWS by assigning to it the value 42.</p>
+<p>In this context, the macro is a simple string replacement operation. It is done
+by the C++ preprocessor, just before the code is sent to the compiler. This is
+essentially equivalent to doing a search and replace operation with your text
+editor.</p>
+<p>It is traditional to use UPPERCASE characters for naming a macro, but this is
+not a requirement. You should follow the coding style adopted by the project
+that you are working on. Developers get really angry when you break their
+coding style, and they can be very mean people when they are angry. Follow the
+coding style.</p>
+<p>In modern C++ programming this usage of macros as symbols is discouraged. The
+reason is that the same goal can be achieved with the use of &#8220;const&#8221; variables,
+with the added advantage of type checking. The Macro being a simple text
+replacement does not provide that verification of type at compilation time.
+That is, in our example above NUMBEROFCOWS can equally be used as an integer, a
+float or a string.</p>
+<p>The code below illustrates how to achieve the same result with the use of const
+typed variables.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">NUMBEROFCOWS</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Number of Cows = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">NUMBEROFCOWS</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The advantage in this case is that the NUMBEROFCOWS has been explicitly
+declared as a positive integer type. Therefore, we get the added convenience of
+the compiler helping us to ensure that the NUMBEROFCOWS is only used in
+accordance to the rules for managing positive integer numbers. This is very
+important, since we know that nobody likes negative Cows.</p>
+</div>
+<div class="section" id="video-1">
+<h2>Video 1<a class="headerlink" href="#video-1" title="Permalink to this headline">¶</a></h2>
+<p>You can see the video of this example at:</p>
+<blockquote>
+<div><iframe src="http://www.youtube.com/embed/BAIgTOog1Sg" style="border: 0; height: 345px; width: 560px">
+</iframe></div></blockquote>
+</div>
+<div class="section" id="as-logical-flags">
+<h2>As Logical Flags<a class="headerlink" href="#as-logical-flags" title="Permalink to this headline">¶</a></h2>
+<p>Macros can be used as logical flags to control conditional compilation of
+source code.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="cp">#ifdef YOU_ARE_IN_THE_US</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Football is the most popular Sport = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="cp">#else</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Soccer is the most popular Sport = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The definition of the YOU_ARE_IN_THE_US Macro symbol can be passed to the
+program in multiple ways.</p>
+<p>It can be put in a header file that is then included in the program:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &quot;macroDefinitions.h&quot;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="cp">#ifdef YOU_ARE_IN_THE_US</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Football is the most popular Sport = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="cp">#else</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Soccer is the most popular Sport = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In which case the macroDefinitions.h file will contain something like</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#define YOU_ARE_IN_THE_US</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#undef YOU_ARE_IN_THE_US</span>
+</pre></div>
+</div>
+<p>Another way to pass the macro definition to the code is to put it in the
+command line arguments that are given to the compiler as illustrated below</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">g</span><span class="o">++</span>  <span class="n">macrosAsLogicalFlags</span><span class="p">.</span><span class="n">cpp</span>  <span class="o">-</span><span class="n">DYOU_ARE_IN_THE_US</span>  <span class="o">-</span><span class="n">o</span> <span class="n">macrosAsLogicalFlags</span>
+</pre></div>
+</div>
+<p>This usage of macros is very hard to debug and typically it must be reserved
+for system configuration issues. For example, selecting between code that is
+written for 32-bits or 64-bits platforms.</p>
+<p>The other drawback of this usage of macros is that the source code starts
+accumulating sections of code that are rarely compiled and rarely executed.
+Such dark corners of the code become shelter for bugs that will later multiply
+and take over the world !</p>
+</div>
+<div class="section" id="video-2">
+<h2>Video 2<a class="headerlink" href="#video-2" title="Permalink to this headline">¶</a></h2>
+<p>You can see the video of this example at:</p>
+<blockquote>
+<div><iframe src="http://www.youtube.com/embed/TePg_djuDtY" style="border: 0; height: 345px; width: 560px">
+</iframe></div></blockquote>
+<p>It does not includes footage of the part where bugs take over the world...</p>
+</div>
+<div class="section" id="as-code-generation">
+<h2>As Code Generation<a class="headerlink" href="#as-code-generation" title="Permalink to this headline">¶</a></h2>
+<p>Macros can be used to generate code on the fly.</p>
+<p>This is rather advanced use of macros and you probably should avoid it if you
+can.</p>
+<p>It takes advantage of the fact that macros are expanded by the pre-processor
+and therefore allow you to modify the source code of your program before it
+gets to the compiler.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="cp">#define PRINT_ARGUMENTS  \</span>
+<span class="cp">  for(int i=0; i&lt;argc; i++) \</span>
+<span class="cp">   { \</span>
+<span class="cp">   std::cout &lt;&lt; argv[i] &lt;&lt; std::endl; \</span>
+<span class="cp">   }</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span> <span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">PRINT_ARGUMENTS</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The C++ preprocessor will expand this code to become:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span> <span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">argc</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+   <span class="p">{</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+   <span class="p">}</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice the use of the &#8220;&#8221; at the end of the lines in the macro definition. They
+are needed because in principle a Macro definition ends at the end of the line.
+Therefore, if we want to write multi-line macros, we need to &#8220;escape&#8221; the end
+of the line character.</p>
+<p>This is a way of obtaining a bit of readability in the code, at the expense of
+producing code that is VERY VERY HARD to debug an maintain. Use this abundantly
+if you hate the team of developers that will maintain the code for the next ten
+years... be assured, they will hate you back...   :-)</p>
+<p>On the other hand, when used wisely, this can help maintain uniformity in the
+source code, and actually facilitate maintenance. This is a very sharp knife,
+reserve it for very special cases, but also beware that many projects tend to
+use this trick.</p>
+</div>
+<div class="section" id="video-3">
+<h2>Video 3<a class="headerlink" href="#video-3" title="Permalink to this headline">¶</a></h2>
+<p>You can see the video of this example at:</p>
+<blockquote>
+<div><iframe src="http://www.youtube.com/embed/aOwjz2WJ2yY" style="border: 0; height: 345px; width: 560px">
+</iframe></div></blockquote>
+</div>
+<div class="section" id="as-accelerated-functions">
+<h2>As Accelerated Functions<a class="headerlink" href="#as-accelerated-functions" title="Permalink to this headline">¶</a></h2>
+<p>Since macros are expanded by the pre-processor before the code is passed to the
+compiler, it is possible to use them as a way of inserting some lines of code
+that otherwise should have been put in a function. This is usually called
+&#8220;inlining&#8221;. What is interesting about using inlining is the fact that the code
+will run faster at execution time because instead of havig to invoke a function
+and pass arguments and returns values via the stack, the entire process
+actually happens as if the lines of code were inserted in place... indeed they
+are inserted in place.</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+
+
+<span class="cp">#define isDivisibleByThree( (x) )  \</span>
+<span class="cp">  (int)((float)(x)/3.0) == ((float)(x)/3.0) ? 1 : 0;</span>
+
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span> <span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Missing Argument&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="kt">float</span> <span class="n">inputNumber</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+
+  <span class="k">if</span><span class="p">(</span> <span class="n">isDivisibleByThree</span><span class="p">(</span> <span class="n">inputNumber</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Is Divisible by 3&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="k">else</span>
+    <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Is Not Divisible by 3&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this case the isDivisibleByThree() macro, takes more the look of a function.
+It is expanded by replacign the argument into the macro expression and putting
+it inline. This is particularly interesting for very simply operations, for
+which the overhead of pushing and poping values from the stack will be large
+compared to the actual computation performed by the function.</p>
+<p>Note that in the definition of the macro we put parenthesis &#8220;()&#8221; around the arguments of the macro. This is done as a precaution against the confusion that may arise when the macro is called with an expression as an argument, for example:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">isDivisibleByThree</span><span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>will be expanded to</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)(</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">==</span> <span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>while, if we have not used the parenthesis precaution, the code will be
+expanded to</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="p">(</span><span class="kt">int</span><span class="p">)((</span><span class="kt">float</span><span class="p">)</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">==</span> <span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and the precedence of operations will not correspond to what we were expecting.</p>
+</div>
+<div class="section" id="video-4">
+<h2>Video 4<a class="headerlink" href="#video-4" title="Permalink to this headline">¶</a></h2>
+<p>You can see the video of this example at:</p>
+<blockquote>
+<div><iframe src="http://www.youtube.com/embed/uz_2EVcXm-w" style="border: 0; height: 345px; width: 560px">
+</iframe></div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Macros</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#as-symbols">As Symbols</a></li>
+<li><a class="reference internal" href="#video-1">Video 1</a></li>
+<li><a class="reference internal" href="#as-logical-flags">As Logical Flags</a></li>
+<li><a class="reference internal" href="#video-2">Video 2</a></li>
+<li><a class="reference internal" href="#as-code-generation">As Code Generation</a></li>
+<li><a class="reference internal" href="#video-3">Video 3</a></li>
+<li><a class="reference internal" href="#as-accelerated-functions">As Accelerated Functions</a></li>
+<li><a class="reference internal" href="#video-4">Video 4</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="CommandLineArguments.html"
+                        title="previous chapter">Command Line Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Wanted.html"
+                        title="next chapter">Wanted Sessions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/Cxx/Macros.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Wanted.html" title="Wanted Sessions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="CommandLineArguments.html" title="Command Line Arguments"
+             >previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" >C++ Development</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

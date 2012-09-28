@@ -56,7 +56,7 @@
 <h2>Sphinx documentation<a class="headerlink" href="#sphinx-documentation" title="Permalink to this headline">¶</a></h2>
 <p>First, install <a class="reference external" href="http://sphinx.pocoo.org">Sphinx</a>.</p>
 <p>Clone the sources:</p>
-<div class="highlight-python"><pre>git clone git@github.com:InsightSoftwareConsortium/ITKBarCamp.git
+<div class="highlight-c++"><pre>git clone git@github.com:InsightSoftwareConsortium/ITKBarCamp.git
 cd ITKBarCamp/doc
 git clone -b gh-pages git@github.com:InsightSoftwareConsortium/ITKBarCamp-doc.git build/html</pre>
 </div>
@@ -64,17 +64,20 @@ git clone -b gh-pages git@github.com:InsightSoftwareConsortium/ITKBarCamp-doc.gi
 large files to the repository &#8211; use images already used by the other examples
 repositories.  Make sure the project builds, looks good, there are no speling
 errors:</p>
-<div class="highlight-python"><pre>make html</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">make</span> <span class="n">html</span>
+</pre></div>
 </div>
 <p>Merge into master with:</p>
-<div class="highlight-python"><pre>git merge --no-ff branchName
-git push</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">git</span> <span class="n">merge</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ff</span> <span class="n">branchName</span>
+<span class="n">git</span> <span class="n">push</span>
+</pre></div>
 </div>
 <p>Next, commit and push the built HTML:</p>
-<div class="highlight-python"><pre>cd build/html
-git add *
-git commit -m "Build on $(date) of $(cd ..; git rev-parse --short HEAD)."
-git push</pre>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">cd</span> <span class="n">build</span><span class="o">/</span><span class="n">html</span>
+<span class="n">git</span> <span class="n">add</span> <span class="o">*</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s">&quot;Build on $(date) of $(cd ..; git rev-parse --short HEAD).&quot;</span>
+<span class="n">git</span> <span class="n">push</span>
+</pre></div>
 </div>
 </div>
 </div>

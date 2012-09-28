@@ -64,19 +64,20 @@
 <div class="section" id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
 <p>hello-itk.cxx:</p>
-<div class="highlight-python"><pre>#include "itkImage.h"
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;itkImage.h&quot;</span>
 
-int main()
-{
-  typedef itk::Image&lt; char, 2 &gt;  ImageType;
-  ImageType::Pointer image = ImageType::New();
-  std::cout &lt;&lt; "Hello World ITK !" &lt;&lt; std::endl;
-  std::cout &lt;&lt; image &lt;&lt; std::endl;
-  return EXIT_SUCCESS;
-}</pre>
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="kt">char</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span>  <span class="n">ImageType</span><span class="p">;</span>
+  <span class="n">ImageType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">image</span> <span class="o">=</span> <span class="n">ImageType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello World ITK !&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">image</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>CMakeLists.txt:</p>
-<div class="highlight-python"><pre>cmake_minimum_required( VERSION 2.8 )
+<div class="highlight-c++"><pre>cmake_minimum_required( VERSION 2.8 )
 enable_testing()
 
 find_package( ITK REQUIRED )
