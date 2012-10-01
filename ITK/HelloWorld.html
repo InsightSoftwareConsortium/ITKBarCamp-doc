@@ -63,7 +63,7 @@
 </div>
 <div class="section" id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<p>hello-itk.cxx:</p>
+<p><em>hello-itk.cxx</em>:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &quot;itkImage.h&quot;</span>
 
 <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
@@ -76,18 +76,23 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>CMakeLists.txt:</p>
-<div class="highlight-c++"><pre>cmake_minimum_required( VERSION 2.8 )
-enable_testing()
+<p><em>CMakeLists.txt</em>:</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="nb">cmake_minimum_required</span><span class="p">(</span> <span class="s">VERSION</span> <span class="s">2.8</span> <span class="p">)</span>
+<span class="nb">enable_testing</span><span class="p">()</span>
 
-find_package( ITK REQUIRED )
-include( ${ITK_USE_FILE} )
+<span class="nb">find_package</span><span class="p">(</span> <span class="s">ITK</span> <span class="s">REQUIRED</span> <span class="p">)</span>
+<span class="nb">include</span><span class="p">(</span> <span class="o">${</span><span class="nv">ITK_USE_FILE</span><span class="o">}</span> <span class="p">)</span>
 
-add_executable( hello-itk hello-itk.cxx )
-target_link_libraries( hello-itk ${ITK_LIBRARIES} )
-add_test( hello-itk-test hello-itk )</pre>
+<span class="nb">add_executable</span><span class="p">(</span> <span class="s">hello-itk</span> <span class="s">hello-itk.cxx</span> <span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span> <span class="s">hello-itk</span> <span class="o">${</span><span class="nv">ITK_LIBRARIES</span><span class="o">}</span> <span class="p">)</span>
+<span class="nb">add_test</span><span class="p">(</span> <span class="s">hello-itk-test</span> <span class="s">hello-itk</span> <span class="p">)</span>
+</pre></div>
 </div>
 </div>
+<div class="section" id="video-for-ubuntu-12-04-1-with-gcc-and-eclipse">
+<h2>Video for Ubuntu 12.04.1 with GCC and Eclipse<a class="headerlink" href="#video-for-ubuntu-12-04-1-with-gcc-and-eclipse" title="Permalink to this headline">¶</a></h2>
+<iframe src="http://www.youtube.com/embed/VfB6ue6HLMA" style="border: 0; height: 345px; width: 560px">
+</iframe></div>
 </div>
 
 
@@ -101,6 +106,7 @@ add_test( hello-itk-test hello-itk )</pre>
 <li><a class="reference internal" href="#">Hello World</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#video-for-ubuntu-12-04-1-with-gcc-and-eclipse">Video for Ubuntu 12.04.1 with GCC and Eclipse</a></li>
 </ul>
 </li>
 </ul>
