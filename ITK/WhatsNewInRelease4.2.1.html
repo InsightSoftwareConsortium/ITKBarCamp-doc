@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What’s New in Release 4.2.1 &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
+    <link rel="up" title="ITK" href="index.html" />
+    <link rel="next" title="Wanted Sessions" href="Wanted.html" />
+    <link rel="prev" title="Hello World" href="HelloWorld.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Wanted.html" title="Wanted Sessions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="HelloWorld.html" title="Hello World"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ITK</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-s-new-in-release-4-2-1">
+<span id="index-0"></span><h1>What&#8217;s New in Release 4.2.1<a class="headerlink" href="#what-s-new-in-release-4-2-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>A summary of what is new in the 4.2.1 patch release.</div></blockquote>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Release 4.2.1 was a bugfix/patch release.  This release addressed some critical
+build and performance issues.</p>
+<ul class="simple">
+<li>Important performance gains were the result of efforts by community members
+Bradley Lowekamp and Kent Williams through the removal of filter
+GetInput/GetOutput calls in inner loops.</li>
+<li>Compilation errors were fixed for Visual Studio 2012.</li>
+<li>A number of CMake/WrapITK issues were addressed to improve Python wrapping on
+Windows.</li>
+<li>There were also other assorted fixes.</li>
+<li>The next minor feature release, v4.3.0, is scheduled for December.</li>
+</ul>
+</div>
+<div class="section" id="list-of-commits">
+<h2>List of commits<a class="headerlink" href="#list-of-commits" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">Bradley</span> <span class="n">Lowekamp</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">COMP:</span> <span class="n">fixing</span> <span class="n">error</span> <span class="n">when</span> <span class="n">instatiated</span> <span class="n">with</span> <span class="n">image</span> <span class="n">of</span> <span class="kt">double</span>
+      <span class="nl">PERF:</span> <span class="n">remove</span> <span class="n">per</span> <span class="n">sample</span> <span class="n">allocation</span><span class="p">,</span> <span class="n">use</span> <span class="n">per</span><span class="o">-</span><span class="kr">thread</span> <span class="n">structure</span>
+      <span class="nl">BUG:</span> <span class="n">prevent</span> <span class="k">static</span> <span class="n">initialization</span> <span class="n">fiasco</span> <span class="n">during</span> <span class="n">factory</span> <span class="n">registration</span>
+      <span class="nl">BUG:</span> <span class="n">fix</span> <span class="n">writing</span> <span class="n">a</span> <span class="n">corrupt</span> <span class="n">meta</span> <span class="n">image</span> <span class="n">header</span> <span class="n">from</span> <span class="n">unknown</span> <span class="n">metadata</span>
+      <span class="nl">BUG:</span> <span class="n">fix</span> <span class="k">for</span> <span class="n">overlay</span> <span class="n">functor</span> <span class="k">for</span> <span class="n">llvm</span> <span class="n">optimization</span> <span class="n">bug</span>
+
+<span class="n">Cory</span> <span class="n">Quammen</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">BUG:</span> <span class="n">Added</span> <span class="n">missing</span> <span class="n">include</span> <span class="o">&lt;</span><span class="n">algorithm</span><span class="o">&gt;</span>
+
+<span class="n">Hans</span> <span class="n">Johnson</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">BUG:</span> <span class="n">Test</span> <span class="n">harness</span> <span class="n">gave</span> <span class="kc">false</span> <span class="n">positives</span>
+      <span class="nl">BUG:</span> <span class="n">Remove</span> <span class="n">duplicate</span> <span class="n">file</span> <span class="n">in</span> <span class="n">wrong</span> <span class="n">place</span>
+      <span class="nl">COMP:</span> <span class="n">Remove</span> <span class="n">unnecessary</span> <span class="k">const_cast</span><span class="p">.</span>
+
+<span class="n">Ho</span> <span class="n">Cheung</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">COMP:</span> <span class="n">Add</span> <span class="s">&quot;#include &lt;functional&gt;&quot;</span> <span class="n">to</span> <span class="n">classes</span> <span class="k">for</span> <span class="n">VS2012</span>
+      <span class="nl">PERF:</span> <span class="n">Fix</span> <span class="n">usage</span> <span class="n">of</span> <span class="n">ElementAt</span> <span class="n">in</span> <span class="n">PolyLineParametricPath</span> <span class="n">to</span> <span class="n">use</span> <span class="k">const</span> <span class="n">version</span>
+
+<span class="n">Kent</span> <span class="n">Williams</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">PERF:</span> <span class="n">Pull</span> <span class="n">expensive</span> <span class="n">GetInput</span><span class="o">/</span><span class="n">GetOutput</span> <span class="n">calls</span> <span class="n">out</span> <span class="n">of</span> <span class="n">inner</span> <span class="n">loops</span>
+      <span class="nl">COMP:</span> <span class="n">propogate</span> <span class="n">compiler</span> <span class="n">selection</span> <span class="o">&amp;</span> <span class="n">flags</span> <span class="n">to</span> <span class="n">FFTW</span> <span class="n">build</span>
+
+<span class="n">Kris</span> <span class="n">Zygmunt</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">BUG:</span> <span class="n">GPU</span> <span class="n">tests</span> <span class="n">sometimes</span> <span class="n">fails</span>
+
+<span class="n">Matthew</span> <span class="n">McCormick</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">BUG:</span> <span class="n">Fix</span> <span class="n">GCC_XML</span> <span class="n">and</span> <span class="n">SWIG</span> <span class="n">ExternalProject</span> <span class="n">dependencies</span><span class="p">.</span>
+      <span class="nl">BUG:</span> <span class="n">Fix</span> <span class="n">WrapITK</span> <span class="n">GCCXML</span> <span class="n">ExternalProject</span> <span class="n">dependency</span><span class="p">.</span>
+      <span class="nl">COMP:</span> <span class="n">Make</span> <span class="n">sure</span> <span class="n">the</span> <span class="n">VC</span> <span class="n">script</span> <span class="n">gets</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">gccxml</span> <span class="n">installation</span><span class="p">.</span>
+      <span class="nl">BUG:</span> <span class="n">Fix</span> <span class="n">multi</span><span class="o">-</span><span class="n">object</span> <span class="n">MetaIO</span> <span class="n">reading</span> <span class="k">for</span> <span class="n">ASCII</span> <span class="n">MetaVesselTube</span><span class="p">.</span>
+
+<span class="n">Matthias</span> <span class="n">Seise</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">COMP:</span> <span class="n">Compile</span> <span class="n">wrapITK</span> <span class="k">for</span> <span class="n">python2</span><span class="mf">.7</span><span class="p">,</span><span class="mi">64</span><span class="n">bit</span> <span class="n">on</span> <span class="n">windows</span>
+
+<span class="n">Willi</span> <span class="n">Huber</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span>
+      <span class="nl">COMP:</span> <span class="n">WrapITK</span> <span class="n">generates</span> <span class="n">non</span><span class="o">-</span><span class="n">unique</span> <span class="n">typedefs</span> <span class="n">in</span> <span class="n">FFT</span> <span class="n">submodule</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What&#8217;s New in Release 4.2.1</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#list-of-commits">List of commits</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="HelloWorld.html"
+                        title="previous chapter">Hello World</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Wanted.html"
+                        title="next chapter">Wanted Sessions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ITK/WhatsNewInRelease4.2.1.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Wanted.html" title="Wanted Sessions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="HelloWorld.html" title="Hello World"
+             >previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" >ITK</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
