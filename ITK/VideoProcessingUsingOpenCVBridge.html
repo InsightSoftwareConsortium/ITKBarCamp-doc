@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Video Processing Using ITK-OpenCVBridge module &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
+    <link rel="up" title="ITK" href="index.html" />
+    <link rel="next" title="Lung Tumor Segmentation using Lesion Sizing Toolkit" href="LungNoduleSegmentationWithLSTK.html" />
+    <link rel="prev" title="What’s New in Release 4.2.1" href="WhatsNewInRelease4.2.1.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="LungNoduleSegmentationWithLSTK.html" title="Lung Tumor Segmentation using Lesion Sizing Toolkit"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="WhatsNewInRelease4.2.1.html" title="What’s New in Release 4.2.1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ITK</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="video-processing-using-itk-opencvbridge-module">
+<span id="index-0"></span><h1>Video Processing Using ITK-OpenCVBridge module<a class="headerlink" href="#video-processing-using-itk-opencvbridge-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Process a video using ITK image filters: itk::Image  &lt;=&gt;  cv::Mat</div></blockquote>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p><em>BasicVideoFilteringEx1.cxx</em></p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="cp">#include &lt;opencv2/imgproc/imgproc.hpp&gt;</span>
+<span class="cp">#include &lt;opencv2/highgui/highgui.hpp&gt;</span>
+
+<span class="cp">#include &lt;itkImage.h&gt;</span>
+<span class="cp">#include &lt;itkCastImageFilter.h&gt;</span>
+<span class="cp">#include &lt;itkCannyEdgeDetectionImageFilter.h&gt;</span>
+<span class="cp">#include &lt;itkRescaleIntensityImageFilter.h&gt;</span>
+<span class="cp">#include &lt;itkOpenCVImageBridge.h&gt;</span>
+
+<span class="c1">// Process a single frame of video and return the resulting frame</span>
+<span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">processFrame</span><span class="p">(</span> <span class="k">const</span> <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span><span class="o">&amp;</span> <span class="n">inputImage</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">typedef</span>   <span class="kt">unsigned</span> <span class="kt">char</span>                          <span class="n">InputPixelType</span><span class="p">;</span>
+  <span class="k">typedef</span>   <span class="kt">float</span>                                  <span class="n">RealPixelType</span><span class="p">;</span>
+  <span class="k">typedef</span>   <span class="kt">unsigned</span> <span class="kt">char</span>                          <span class="n">OutputPixelType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">InputPixelType</span><span class="p">,</span>  <span class="mi">2</span> <span class="o">&gt;</span>         <span class="n">InputImageType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">RealPixelType</span><span class="p">,</span>   <span class="mi">2</span> <span class="o">&gt;</span>         <span class="n">RealImageType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">Image</span><span class="o">&lt;</span> <span class="n">OutputPixelType</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;</span>         <span class="n">OutputImageType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">OpenCVImageBridge</span>                   <span class="n">BridgeType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">CastImageFilter</span><span class="o">&lt;</span> <span class="n">InputImageType</span><span class="p">,</span> <span class="n">RealImageType</span> <span class="o">&gt;</span>
+                                                   <span class="n">CastFilterType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">CannyEdgeDetectionImageFilter</span><span class="o">&lt;</span> <span class="n">RealImageType</span><span class="p">,</span> <span class="n">RealImageType</span> <span class="o">&gt;</span>
+                                                   <span class="n">FilterType</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">itk</span><span class="o">::</span><span class="n">RescaleIntensityImageFilter</span><span class="o">&lt;</span> <span class="n">RealImageType</span><span class="p">,</span> <span class="n">OutputImageType</span> <span class="o">&gt;</span>
+                                                   <span class="n">RescaleFilterType</span><span class="p">;</span>
+
+  <span class="n">CastFilterType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">caster</span> <span class="o">=</span> <span class="n">CastFilterType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+  <span class="n">FilterType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">canny</span> <span class="o">=</span> <span class="n">FilterType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+  <span class="n">RescaleFilterType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">rescaler</span> <span class="o">=</span> <span class="n">RescaleFilterType</span><span class="o">::</span><span class="n">New</span><span class="p">();</span>
+
+  <span class="n">InputImageType</span><span class="o">::</span><span class="n">Pointer</span> <span class="n">itkFrame</span> <span class="o">=</span>
+    <span class="n">itk</span><span class="o">::</span><span class="n">OpenCVImageBridge</span><span class="o">::</span><span class="n">CVMatToITKImage</span><span class="o">&lt;</span> <span class="n">InputImageType</span> <span class="o">&gt;</span><span class="p">(</span> <span class="n">inputImage</span> <span class="p">);</span>
+  <span class="n">caster</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">itkFrame</span> <span class="p">);</span>
+  <span class="n">canny</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">caster</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
+  <span class="n">rescaler</span><span class="o">-&gt;</span><span class="n">SetInput</span><span class="p">(</span> <span class="n">canny</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="n">canny</span><span class="o">-&gt;</span><span class="n">SetVariance</span><span class="p">(</span> <span class="mi">6</span> <span class="p">);</span>
+  <span class="n">canny</span><span class="o">-&gt;</span><span class="n">SetLowerThreshold</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
+  <span class="n">canny</span><span class="o">-&gt;</span><span class="n">SetUpperThreshold</span><span class="p">(</span> <span class="mi">8</span> <span class="p">);</span>
+
+  <span class="k">try</span>
+    <span class="p">{</span>
+    <span class="n">rescaler</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span> <span class="n">itk</span><span class="o">::</span><span class="n">ExceptionObject</span> <span class="o">&amp;</span> <span class="n">excp</span> <span class="p">)</span>
+    <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">excp</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frameOut</span> <span class="o">=</span>
+    <span class="n">BridgeType</span><span class="o">::</span><span class="n">ITKImageToCVMat</span><span class="o">&lt;</span> <span class="n">OutputImageType</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">rescaler</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(),</span><span class="kc">true</span><span class="p">);</span>
+
+  <span class="n">frameOut</span><span class="p">.</span><span class="n">convertTo</span><span class="p">(</span> <span class="n">frameOut</span><span class="p">,</span> <span class="n">CV_8U</span> <span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">frameOut</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Iterate through a video, process each frame, and display the result in a GUI.</span>
+<span class="kt">void</span> <span class="n">processAndDisplayVideo</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">VideoCapture</span><span class="o">&amp;</span> <span class="n">vidCap</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">frameRate</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FPS</span> <span class="p">);</span>
+  <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_WIDTH</span> <span class="p">);</span>
+  <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_HEIGHT</span> <span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">windowName</span> <span class="o">=</span> <span class="s">&quot;Exercise 2: Basic Video Filtering in OpenCV&quot;</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span> <span class="n">windowName</span><span class="p">,</span> <span class="n">CV_WINDOW_FREERATIO</span><span class="p">);</span>
+  <span class="n">cvResizeWindow</span><span class="p">(</span> <span class="n">windowName</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">+</span><span class="mi">50</span> <span class="p">);</span>
+
+  <span class="kt">unsigned</span> <span class="n">delay</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">frameRate</span><span class="p">;</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outputFrame</span> <span class="o">=</span> <span class="n">processFrame</span><span class="p">(</span> <span class="n">frame</span> <span class="p">);</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span> <span class="n">windowName</span><span class="p">,</span> <span class="n">outputFrame</span> <span class="p">);</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Iterate through a video, process each frame, and save the processed video.</span>
+<span class="kt">void</span> <span class="n">processAndSaveVideo</span><span class="p">(</span><span class="n">cv</span><span class="o">::</span><span class="n">VideoCapture</span><span class="o">&amp;</span> <span class="n">vidCap</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">filename</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">frameRate</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FPS</span> <span class="p">);</span>
+  <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_WIDTH</span> <span class="p">);</span>
+  <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">CV_CAP_PROP_FRAME_HEIGHT</span> <span class="p">);</span>
+
+  <span class="kt">int</span> <span class="n">fourcc</span> <span class="o">=</span> <span class="n">CV_FOURCC</span><span class="p">(</span><span class="sc">&#39;D&#39;</span><span class="p">,</span><span class="sc">&#39;I&#39;</span><span class="p">,</span><span class="sc">&#39;V&#39;</span><span class="p">,</span><span class="sc">&#39;X&#39;</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">VideoWriter</span> <span class="n">writer</span><span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">fourcc</span><span class="p">,</span> <span class="n">frameRate</span><span class="p">,</span>
+                          <span class="n">cv</span><span class="o">::</span><span class="n">Size</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span> <span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span> <span class="n">vidCap</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outputFrame</span> <span class="o">=</span> <span class="n">processFrame</span><span class="p">(</span> <span class="n">frame</span> <span class="p">);</span>
+  <span class="n">writer</span> <span class="o">&lt;&lt;</span> <span class="n">outputFrame</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span> <span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span> <span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span><span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span><span class="s">&quot; input_video output_video&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">VideoCapture</span> <span class="n">vidCap</span><span class="p">(</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">vidCap</span><span class="p">.</span><span class="n">isOpened</span><span class="p">()</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Unable to open video file: &quot;</span><span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">processAndDisplayVideo</span><span class="p">(</span> <span class="n">vidCap</span> <span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">processAndSaveVideo</span><span class="p">(</span> <span class="n">vidCap</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><em>CMakeLists.txt</em>:</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">ITK</span> <span class="s">REQUIRED</span> <span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">ITK_FOUND</span><span class="p">)</span>
+  <span class="nb">include</span><span class="p">(</span><span class="o">${</span><span class="nv">USE_ITK_FILE</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenCV</span> <span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">OpenCV_FOUND</span><span class="p">)</span>
+  <span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">OpenCV_INCLUDE_DIRS</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">BasicVideoFilteringEx1</span>
+  <span class="s">BasicVideoFilteringEx1.cxx</span> <span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">BasicVideoFilteringEx1</span>
+  <span class="o">${</span><span class="nv">ITK_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">OpenCV_LIBS</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Video Processing Using ITK-OpenCVBridge module</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="WhatsNewInRelease4.2.1.html"
+                        title="previous chapter">What&#8217;s New in Release 4.2.1</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="LungNoduleSegmentationWithLSTK.html"
+                        title="next chapter">Lung Tumor Segmentation using Lesion Sizing Toolkit</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ITK/VideoProcessingUsingOpenCVBridge.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="LungNoduleSegmentationWithLSTK.html" title="Lung Tumor Segmentation using Lesion Sizing Toolkit"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="WhatsNewInRelease4.2.1.html" title="What’s New in Release 4.2.1"
+             >previous</a> |</li>
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" >ITK</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Image Processing &mdash; ITKBarCamp  documentation</title>
+    <title>Lung Tumor Segmentation using Lesion Sizing Toolkit &mdash; ITKBarCamp  documentation</title>
     
     <link rel="stylesheet" href="../_static/itk.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,8 +27,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="top" title="ITKBarCamp  documentation" href="../index.html" />
+    <link rel="up" title="ITK" href="index.html" />
     <link rel="next" title="Wanted Sessions" href="Wanted.html" />
-    <link rel="prev" title="Wanted Sessions" href="../Cxx/Wanted.html" /> 
+    <link rel="prev" title="Video Processing Using ITK-OpenCVBridge module" href="VideoProcessingUsingOpenCVBridge.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +42,10 @@
           <a href="Wanted.html" title="Wanted Sessions"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../Cxx/Wanted.html" title="Wanted Sessions"
+          <a href="VideoProcessingUsingOpenCVBridge.html" title="Video Processing Using ITK-OpenCVBridge module"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">ITK</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,13 +54,29 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="image-processing">
-<h1>Image Processing<a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Wanted.html">Wanted Sessions</a></li>
-</ul>
+  <div class="section" id="lung-tumor-segmentation-using-lesion-sizing-toolkit">
+<span id="index-0"></span><h1>Lung Tumor Segmentation using Lesion Sizing Toolkit<a class="headerlink" href="#lung-tumor-segmentation-using-lesion-sizing-toolkit" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>How to run Lesion Sizing Toolkit (<a class="reference external" href="http://public.kitware.com/LesionSizingKit/index.php/Main_Page">LSTK</a>) to segment a lung tumor.</div></blockquote>
+</div>
+<div class="section" id="configure-itk-build-tree-with-lstk">
+<h2>Configure ITK build tree with LSTK<a class="headerlink" href="#configure-itk-build-tree-with-lstk" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>VTK v5.10
+ITK v4.2
+CMake Configuration : Module_LesionSizingToolkit = ON; LSTK_USE_VTK = ON</div></blockquote>
+</div>
+<div class="section" id="run-one-segmentaiton-example">
+<h2>Run one segmentaiton example<a class="headerlink" href="#run-one-segmentaiton-example" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>./bin/LesionSegmentation  -InputImage  &lt;./inputImage.mha&gt;  -OutputImage  &lt;./outputTumorImage.mha&gt;   -Seeds 3 326.2 231.9 172.6</dt>
+<dd>-MaximumRadius 20  -OutputROI  &lt;./outputROI.mhd&gt;   -OutputMesh  &lt;./output.stl&gt; -Visualize 1    -Screenshot &lt;./screenShotTumor&gt;</dd>
+</dl>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -68,15 +86,26 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Lung Tumor Segmentation using Lesion Sizing Toolkit</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#configure-itk-build-tree-with-lstk">Configure ITK build tree with LSTK</a></li>
+<li><a class="reference internal" href="#run-one-segmentaiton-example">Run one segmentaiton example</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../Cxx/Wanted.html"
-                        title="previous chapter">Wanted Sessions</a></p>
+  <p class="topless"><a href="VideoProcessingUsingOpenCVBridge.html"
+                        title="previous chapter">Video Processing Using ITK-OpenCVBridge module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Wanted.html"
                         title="next chapter">Wanted Sessions</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/ImageProcessing/index.txt"
+    <li><a href="../_sources/ITK/LungNoduleSegmentationWithLSTK.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -106,9 +135,10 @@
           <a href="Wanted.html" title="Wanted Sessions"
              >next</a> |</li>
         <li class="right" >
-          <a href="../Cxx/Wanted.html" title="Wanted Sessions"
+          <a href="VideoProcessingUsingOpenCVBridge.html" title="Video Processing Using ITK-OpenCVBridge module"
              >previous</a> |</li>
-        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
+        <li><a href="../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="index.html" >ITK</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
