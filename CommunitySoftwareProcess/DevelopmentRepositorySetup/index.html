@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development Repository Setup &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
+    <link rel="up" title="Community Software Process" href="../index.html" />
+    <link rel="next" title="Style Check ITK with KWStyle" href="../StyleCheckITKWithKWStyle/index.html" />
+    <link rel="prev" title="Community Software Process" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Community Software Process"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Community Software Process</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development-repository-setup">
+<span id="index-0"></span><h1>Development Repository Setup<a class="headerlink" href="#development-repository-setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>We describe how to setup your local Git repository for development with ITK.
+This is a pre-requisite for testing patches, submitting patches, etc.</div></blockquote>
+</div>
+<div class="section" id="how">
+<h2>How<a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<p>In a bash shell with <a class="reference external" href="http://git-scm.org/">Git</a></p>
+<div class="highlight-bash"><div class="highlight"><pre>git clone git://itk.org/ITK.git
+<span class="nb">cd </span>ITK
+./Utilities/SetupForDevelopment.sh
+</pre></div>
+</div>
+<p>and follow the interactive prompt.</p>
+</div>
+<div class="section" id="why">
+<h2>Why<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p>With the Git repository setup, it is possible to create and submit patches
+through <a class="reference external" href="http://review.source.kitware.com/">Gerrit</a>, review patches on Gerrit.  The <em>SetupForDevelopment.sh</em> does
+many nice things, such as</p>
+<ul class="simple">
+<li>Make sure your Git user and email are configured, so you get credit for your
+work.</li>
+<li>Setup hooks to check for ITK style-compliance, prevent large file commits,
+etc.</li>
+<li>Setup the <a class="reference external" href="http://review.source.kitware.com/">Gerrit</a> hooks, remote, and aliases, so a topic branch can be pushed
+with <cite>git gerrit-push</cite>.</li>
+<li>Provide generally useful tips configuring Git.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development Repository Setup</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#how">How</a></li>
+<li><a class="reference internal" href="#why">Why</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Community Software Process</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../StyleCheckITKWithKWStyle/index.html"
+                        title="next chapter">Style Check ITK with KWStyle</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/CommunitySoftwareProcess/DevelopmentRepositorySetup/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Community Software Process"
+             >previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Community Software Process</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
