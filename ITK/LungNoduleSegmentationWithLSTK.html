@@ -61,23 +61,36 @@
 <blockquote>
 <div>How to run Lesion Sizing Toolkit (<a class="reference external" href="http://public.kitware.com/LesionSizingKit/index.php/Main_Page">LSTK</a>) to segment a lung tumor.</div></blockquote>
 </div>
-<div class="section" id="configure-itk-build-tree-with-lstk">
-<h2>Configure ITK build tree with LSTK<a class="headerlink" href="#configure-itk-build-tree-with-lstk" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="build-lstk-with-itk">
+<h2>Build LSTK with ITK<a class="headerlink" href="#build-lstk-with-itk" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>VTK v5.10
-ITK v4.2
-CMake Configuration : Module_LesionSizingToolkit = ON; LSTK_USE_VTK = ON</div></blockquote>
+<div><dl class="docutils">
+<dt>Versions:</dt>
+<dd>VTK v5.10
+ITK v4.2</dd>
+<dt>CMake Configuration :</dt>
+<dd>Fetch_LesionSizingToolkit = ON
+Module_LesionSizingToolkit = ON;
+LSTK_USE_VTK = ON
+VTK_DIR = your/VTK/build/Path;</dd>
+</dl>
+</div></blockquote>
 </div>
-<div class="section" id="run-one-segmentaiton-example">
-<h2>Run one segmentaiton example<a class="headerlink" href="#run-one-segmentaiton-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="run-a-segmentaiton-example">
+<h2>Run a segmentaiton example:<a class="headerlink" href="#run-a-segmentaiton-example" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
-<dt>./bin/LesionSegmentation  -InputImage  &lt;./inputImage.mha&gt;  -OutputImage  &lt;./outputTumorImage.mha&gt;   -Seeds 3 326.2 231.9 172.6</dt>
-<dd>-MaximumRadius 20  -OutputROI  &lt;./outputROI.mhd&gt;   -OutputMesh  &lt;./output.stl&gt; -Visualize 1    -Screenshot &lt;./screenShotTumor&gt;</dd>
+<dt>[Your/ITK/Build/Tree]/bin/LesionSegmentation  -InputDICOMDir  /path/to/DICOM/folder  -OutputImage  ./outputTumorImage.mha   -Seeds 3 326.2 231.9 172.6</dt>
+<dd>-MaximumRadius 20  -OutputROI  ./outputROI.mhd   -OutputMesh  ./output.stl -Visualize 1    -Screenshot ./screenShotTumor</dd>
+<dt>The example dataset used in the following video is downloaded from</dt>
+<dd><a class="reference external" href="http://midas3.kitware.com/midas/item/20902">http://midas3.kitware.com/midas/item/20902</a> ,</dd>
+<dt>with the seeds specified here:</dt>
+<dd><a class="reference external" href="http://midas3.kitware.com/midas/item/22945">http://midas3.kitware.com/midas/item/22945</a></dd>
 </dl>
 </div>
 <div class="section" id="video">
 <h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
-</div>
+<iframe src="http://www.youtube.com/embed/dFtipGL6SEs" style="border: 0; height: 345px; width: 560px">
+</iframe></div>
 </div>
 
 
@@ -90,8 +103,8 @@ CMake Configuration : Module_LesionSizingToolkit = ON; LSTK_USE_VTK = ON</div></
   <ul>
 <li><a class="reference internal" href="#">Lung Tumor Segmentation using Lesion Sizing Toolkit</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#configure-itk-build-tree-with-lstk">Configure ITK build tree with LSTK</a></li>
-<li><a class="reference internal" href="#run-one-segmentaiton-example">Run one segmentaiton example</a></li>
+<li><a class="reference internal" href="#build-lstk-with-itk">Build LSTK with ITK</a></li>
+<li><a class="reference internal" href="#run-a-segmentaiton-example">Run a segmentaiton example:</a></li>
 <li><a class="reference internal" href="#video">Video</a></li>
 </ul>
 </li>
@@ -143,7 +156,7 @@ CMake Configuration : Module_LesionSizingToolkit = ON; LSTK_USE_VTK = ON</div></
     </div>
     <div class="footer">
         &copy; Copyright 2012, InsightSoftwareConsortium.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

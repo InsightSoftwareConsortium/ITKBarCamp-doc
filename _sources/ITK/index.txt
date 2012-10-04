@@ -6,9 +6,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   HelloWorld/index.rst
+   HelloWorld.rst
    WhatsNewInRelease4.2.1.rst
-   VideoProcessingUsingOpenCVBridge/index.rst
+   VideoProcessingUsingOpenCVBridge.rst
    LungNoduleSegmentationWithLSTK.rst
 
    Wanted.rst
