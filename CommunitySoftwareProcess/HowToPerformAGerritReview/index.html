@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How To Perform A Gerrit Review &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
+    <link rel="up" title="Community Software Process" href="../index.html" />
+    <link rel="next" title="Style Check ITK with KWStyle" href="../StyleCheckITKWithKWStyle/index.html" />
+    <link rel="prev" title="Development Repository Setup" href="../DevelopmentRepositorySetup/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../DevelopmentRepositorySetup/index.html" title="Development Repository Setup"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Community Software Process</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-perform-a-gerrit-review">
+<span id="index-0"></span><h1>How To Perform A Gerrit Review<a class="headerlink" href="#how-to-perform-a-gerrit-review" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Gerrit code reviews are a method to vastly improve the quality of code, train
+new community members, and learn from other community members.  In this
+session, we describe how to perform a review.</div></blockquote>
+</div>
+<div class="section" id="peer-review-duty">
+<h2>Peer review duty<a class="headerlink" href="#peer-review-duty" title="Permalink to this headline">¶</a></h2>
+<p>All community members are encouraged to perform reviews.  If possible, all code
+that is merged should be reviewed and marked <em>Approved</em> by at least one other
+community member prior to merging.  In order for this system to function
+smoothly, community members must perform more reviews than submit patches.</p>
+<p>Any community member can register for a Gerrit account and perform a review a
+&#8220;+1&#8221; or &#8220;-1&#8221; review.  Experienced community members can perform &#8220;+2&#8221; reviews
+required for merges.</p>
+<p>Please review any patch of interest open for review on Gerrit; it is not
+necessary for the author to request your review.</p>
+</div>
+<div class="section" id="review-comments">
+<h2>Review comments<a class="headerlink" href="#review-comments" title="Permalink to this headline">¶</a></h2>
+<p>When reviewing files, inline comments can be entered by double-clicking on a
+line.  Hitting <em>Save</em> on the text box that pops will store the comment as a
+<em>Draft</em> comment.  Draft comments will not be visible to other people until the
+final review is submitted.  When submitting the final review, general comments
+can also be given.  If inline comments were entered, please indicate that in the
+overall review comment with a phrase like, &#8220;Please see inline comments.&#8221;</p>
+</div>
+<div class="section" id="review-ratings">
+<h2>Review ratings<a class="headerlink" href="#review-ratings" title="Permalink to this headline">¶</a></h2>
+<p>There are two classes of review ratings, the <em>Verified</em> score and the <em>Code
+Review</em> score.  The <em>Verified</em> score refers to whether the patch set builds
+without new warnings or errors and whether the tests pass or fail.  Verification
+is possible either by copy/pasting the <em>checkout</em> line on the front page of the
+topic, pasting into a local repository, building, and testing, or by looking at
+the output of the <a class="reference external" href="mailto:CDash&#37;&#52;&#48;Home">CDash<span>&#64;</span>Home</a> builds for a patchset.  The <em>Code
+Review</em> score is a reflection of the reviewer&#8217;s reading of the code and
+indicates algorithm correctness, style compliance, test coverage, etc.</p>
+<p>Rating descriptions:</p>
+<p><strong>Verified</strong></p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">+1</span></kbd></td>
+<td>Everything builds with no new warnings or errors.  All tests pass.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>0</dt>
+<dd>Build/test status of the patch set was not examined.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-1</span></kbd></td>
+<td>Build warnings, build failures, or test failures occurred.  Please remark on
+what was observed in the overall patch comment.</td></tr>
+</tbody>
+</table>
+<p><strong>Code Review</strong></p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">+2</span></kbd></td>
+<td>Everything looks good &#8211; ready to merge.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">+1</span></kbd></td>
+<td>Everything looks good, but the reviewer is not very knowledgeable in the given
+area, a thorough review was not performed, or another community member would
+likely have comments on the patch set and should give a review.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>0</dt>
+<dd>The code was not examined.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-1</span></kbd></td>
+<td>Some issues were identified in the code that should be addressed.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-2</span></kbd></td>
+<td>There are fundamental issues with the patch, and they either need to be fixed
+or the patch abandoned.</td></tr>
+</tbody>
+</table>
+<p>New Gerrit accounts by default not allowed to post <em>+2</em> or <em>-2</em> review.  After a
+significant number of reviews have been performed by a community member, these
+priviledges will be added to an account.</p>
+</div>
+<div class="section" id="review-submission">
+<h2>Review submission<a class="headerlink" href="#review-submission" title="Permalink to this headline">¶</a></h2>
+<p>When ready to submit inline comments, hit the <em>Review</em> button on the topic front
+page.  Next, enter the overall comments and Verified and Code Review ratings.
+Finally, hit the <em>Publish Comments</em> button.</p>
+<p>When the comment have been pushed, the author will be notified of your comments
+via email, and you will added to the list of reviewers so that you will receive
+an email whenever a review is added or new patch set for that topic is created.</p>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+<iframe src="http://www.youtube.com/embed/spty2AoOWew" style="border: 0; height: 345px; width: 560px">
+</iframe></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How To Perform A Gerrit Review</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#peer-review-duty">Peer review duty</a></li>
+<li><a class="reference internal" href="#review-comments">Review comments</a></li>
+<li><a class="reference internal" href="#review-ratings">Review ratings</a></li>
+<li><a class="reference internal" href="#review-submission">Review submission</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../DevelopmentRepositorySetup/index.html"
+                        title="previous chapter">Development Repository Setup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../StyleCheckITKWithKWStyle/index.html"
+                        title="next chapter">Style Check ITK with KWStyle</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/CommunitySoftwareProcess/HowToPerformAGerritReview/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../DevelopmentRepositorySetup/index.html" title="Development Repository Setup"
+             >previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Community Software Process</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
