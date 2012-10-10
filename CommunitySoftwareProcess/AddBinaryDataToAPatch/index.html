@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Submit a Patch to Gerrit &mdash; ITKBarCamp  documentation</title>
+    <title>Add Binary Data to a Patch &mdash; ITKBarCamp  documentation</title>
     
     <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/sidebar.js"></script>
     <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
     <link rel="up" title="Community Software Process" href="../index.html" />
-    <link rel="next" title="Style Check ITK with KWStyle" href="../StyleCheckITKWithKWStyle/index.html" />
-    <link rel="prev" title="Perform a Gerrit Review" href="../PerformAGerritReview/index.html" /> 
+    <link rel="next" title="Development Repository Setup" href="../DevelopmentRepositorySetup/index.html" />
+    <link rel="prev" title="Community Software Process" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,10 +39,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+          <a href="../DevelopmentRepositorySetup/index.html" title="Development Repository Setup"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../PerformAGerritReview/index.html" title="Perform a Gerrit Review"
+          <a href="../index.html" title="Community Software Process"
              accesskey="P">previous</a> |</li>
         <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Community Software Process</a> &raquo;</li> 
@@ -54,31 +54,30 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="submit-a-patch-to-gerrit">
-<span id="index-0"></span><span id="id1"></span><h1>Submit a Patch to Gerrit<a class="headerlink" href="#submit-a-patch-to-gerrit" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="add-binary-data-to-a-patch">
+<span id="index-0"></span><span id="id1"></span><h1>Add Binary Data to a Patch<a class="headerlink" href="#add-binary-data-to-a-patch" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Patches to the ITK repository pass through our Gerrit Code Review instance
-before being merge.  This session describes how to create and submit a patch
-to Gerrit.</div></blockquote>
+<div>Since it is not desirable to add large binary files to the Git repository
+history, they are handled in a special way.  This session demonstrates how to
+add binary data like image files to a Gerrit patch.</div></blockquote>
 </div>
 <div class="section" id="more-information">
 <h2>More information<a class="headerlink" href="#more-information" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="http://www.itk.org/Wiki/ITK/Git/Develop">ITK patch submission process</a> is covered concisely on the Wiki.  In this
-session, we describe how to create and submit a patch.  Other parts of the patch
-lifecycle, such as <a class="reference internal" href="../DevelopmentRepositorySetup/index.html#development-repository-setup"><em>setting up your local repository for development</em></a>, are covered in other sessions.</p>
+<p>A brief description of the CMake/hash system that prevents
+bloat in our Git history is given.  More written information on using the <a class="reference external" href="http://www.itk.org/Wiki/ITK/Git/Develop/Data">ITK
+Git/Gerrit/CMake system for large image or binary data</a> can be found on the Wiki.</p>
 </div>
 <div class="section" id="video">
 <h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
-<iframe src="http://www.youtube.com/embed/ScfQH4lzDaY" style="border: 0; height: 345px; width: 560px">
+<iframe src="http://www.youtube.com/embed/IdhGnORSRXA" style="border: 0; height: 345px; width: 560px">
 </iframe></div>
 <div class="section" id="see-also">
 <h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../AddBinaryDataToAPatch/index.html#add-binary-data-to-a-patch"><em>Add Binary Data to a Patch</em></a></li>
 <li><a class="reference internal" href="../DevelopmentRepositorySetup/index.html#development-repository-setup"><em>Development Repository Setup</em></a></li>
-<li><a class="reference internal" href="../PerformAGerritReview/index.html#perform-a-gerrit-review"><em>Perform a Gerrit Review</em></a></li>
+<li><a class="reference internal" href="../SubmitAPatchToGerrit/index.html#submit-a-patch-to-gerrit"><em>Submit a Patch to Gerrit</em></a></li>
 </ul>
 </div>
 </div>
@@ -91,7 +90,7 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Submit a Patch to Gerrit</a><ul>
+<li><a class="reference internal" href="#">Add Binary Data to a Patch</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#more-information">More information</a></li>
 <li><a class="reference internal" href="#video">Video</a></li>
@@ -101,14 +100,14 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../PerformAGerritReview/index.html"
-                        title="previous chapter">Perform a Gerrit Review</a></p>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Community Software Process</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../StyleCheckITKWithKWStyle/index.html"
-                        title="next chapter">Style Check ITK with KWStyle</a></p>
+  <p class="topless"><a href="../DevelopmentRepositorySetup/index.html"
+                        title="next chapter">Development Repository Setup</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/CommunitySoftwareProcess/SubmitAPatchToGerrit/index.txt"
+    <li><a href="../../_sources/CommunitySoftwareProcess/AddBinaryDataToAPatch/index.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -135,10 +134,10 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+          <a href="../DevelopmentRepositorySetup/index.html" title="Development Repository Setup"
              >next</a> |</li>
         <li class="right" >
-          <a href="../PerformAGerritReview/index.html" title="Perform a Gerrit Review"
+          <a href="../index.html" title="Community Software Process"
              >previous</a> |</li>
         <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Community Software Process</a> &raquo;</li> 
