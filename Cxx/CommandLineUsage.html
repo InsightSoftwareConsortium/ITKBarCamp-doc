@@ -158,10 +158,51 @@ whatever happens to you, remember that we told you so !</p>
 <li>popd</li>
 </ul>
 </div>
+<div class="section" id="hard-links">
+<h2>Hard Links<a class="headerlink" href="#hard-links" title="Permalink to this headline">¶</a></h2>
+<p>Hard links are a way of having a file appear in two directories and to have
+alternative filenames for the same content of bytes stored in disk.</p>
+<ul class="simple">
+<li>Hard links can only be created for files.</li>
+<li>Hard links can not be created for directories.</li>
+</ul>
+<p>Examples</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">ln</span>  <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryA</span><span class="o">/</span><span class="n">myFile01</span><span class="p">.</span><span class="n">txt</span>   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryB</span><span class="o">/</span><span class="n">anotherName</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>This example creates a second filename &#8220;anotherName.txt&#8221; in the &#8220;directoryB&#8221; for
+the &#8216;&#8217;content&#8217;&#8217; of the file myFile01.txt.</p>
+<p>The new filename &#8220;anotherName.txt&#8221; will link to the content even if the initial
+&#8220;myFile01.txt&#8221; filename is deleted.</p>
+</div>
 <div class="section" id="symbolic-links">
 <h2>Symbolic Links<a class="headerlink" href="#symbolic-links" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>ln</li>
+<li>Symbolic Links are a second name that is associated with an existing filename.</li>
+<li>Symbolic links entirely depend on the original filename. If that original
+filename is deleted, then the symbolic link becomes a &#8220;dangling&#8221; link and it
+is unusable.</li>
+<li>Symbolic links can be created for files and directories.</li>
+</ul>
+<p>Examples</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">ln</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryA</span><span class="o">/</span><span class="n">myFile01</span><span class="p">.</span><span class="n">txt</span>   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryB</span><span class="o">/</span><span class="n">anotherName</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="n">ln</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryA</span><span class="o">/</span><span class="n">myFile01</span><span class="p">.</span><span class="n">txt</span>   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryB</span><span class="o">/</span>
+
+<span class="n">ln</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryA</span>    <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">me</span><span class="o">/</span><span class="n">directoryC</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The first example creates an alias name for myFile01.txt in another directory.</li>
+<li>The second example creates a link with the same filename in another directory.</li>
+<li>The third example creates a link to directoryA under the name of directoryC.</li>
+</ul>
+<p>The path to the original file or directory must be provided in a form that
+makes sense from the point of view of the location of the destination name.
+This means that the original name must be specified as one of the following:</p>
+<ul class="simple">
+<li>An absolute path, or</li>
+<li>A path relative to the location of the destination name</li>
 </ul>
 </div>
 <div class="section" id="listing-files">
@@ -232,6 +273,7 @@ whatever happens to you, remember that we told you so !</p>
 <li><a class="reference internal" href="#copying-moving-deleting-files">Copying, Moving, Deleting files</a></li>
 <li><a class="reference internal" href="#video-4">Video 4</a></li>
 <li><a class="reference internal" href="#moving-through-directories">Moving Through Directories</a></li>
+<li><a class="reference internal" href="#hard-links">Hard Links</a></li>
 <li><a class="reference internal" href="#symbolic-links">Symbolic Links</a></li>
 <li><a class="reference internal" href="#listing-files">Listing Files</a></li>
 <li><a class="reference internal" href="#counting-chars-words-lines">Counting Chars, Words, Lines</a></li>

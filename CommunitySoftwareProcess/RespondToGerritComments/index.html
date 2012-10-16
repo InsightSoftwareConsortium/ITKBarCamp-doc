@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Submit a Patch to Gerrit &mdash; ITKBarCamp  documentation</title>
+    <title>Respond to Gerrit Comments &mdash; ITKBarCamp  documentation</title>
     
     <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/sidebar.js"></script>
     <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
     <link rel="up" title="Community Software Process" href="../index.html" />
-    <link rel="next" title="Style Check ITK with KWStyle" href="../StyleCheckITKWithKWStyle/index.html" />
-    <link rel="prev" title="Respond to Gerrit Comments" href="../RespondToGerritComments/index.html" /> 
+    <link rel="next" title="Submit a Patch to Gerrit" href="../SubmitAPatchToGerrit/index.html" />
+    <link rel="prev" title="Perform a Gerrit Review" href="../PerformAGerritReview/index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,10 +39,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+          <a href="../SubmitAPatchToGerrit/index.html" title="Submit a Patch to Gerrit"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../RespondToGerritComments/index.html" title="Respond to Gerrit Comments"
+          <a href="../PerformAGerritReview/index.html" title="Perform a Gerrit Review"
              accesskey="P">previous</a> |</li>
         <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Community Software Process</a> &raquo;</li> 
@@ -54,30 +54,38 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="submit-a-patch-to-gerrit">
-<span id="index-0"></span><span id="id1"></span><h1>Submit a Patch to Gerrit<a class="headerlink" href="#submit-a-patch-to-gerrit" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="respond-to-gerrit-comments">
+<span id="index-0"></span><span id="id1"></span><h1>Respond to Gerrit Comments<a class="headerlink" href="#respond-to-gerrit-comments" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Patches to the ITK repository pass through our Gerrit Code Review instance
-before being merge.  This session describes how to create and submit a patch
-to Gerrit.</div></blockquote>
+<div>After <a class="reference external" href="SubmitaPatchtoGerrit">submitting a patch</a> to the ITK
+Gerrit Code Review instance, another community member will <a class="reference external" href="PerformaGerritReview">perform a review</a> and usually find issues to address.  In this
+session, we go through an example and tips on how to reply to the reviewer&#8217;s
+comments and upload a new patch set that addresses those comments.
+The entire <a class="reference external" href="http://www.itk.org/Wiki/ITK/Git/Develop#Revise_a_Topic">ITK patch submission process</a> is covered concisely on the Wiki.</div></blockquote>
 </div>
-<div class="section" id="more-information">
-<h2>More information<a class="headerlink" href="#more-information" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="http://www.itk.org/Wiki/ITK/Git/Develop">ITK patch submission process</a> is covered concisely on the Wiki.  In this
-session, we describe how to create and submit a patch.  Other parts of the patch
-lifecycle, such as <a class="reference internal" href="../DevelopmentRepositorySetup/index.html#development-repository-setup"><em>setting up your local repository for development</em></a>, are covered in other sessions.</p>
+<div class="section" id="workflow-tips-for-responding-to-code-reviews">
+<h2>Workflow tips for responding to code reviews<a class="headerlink" href="#workflow-tips-for-responding-to-code-reviews" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>While making changes that address a reviewer&#8217;s comments, add an inline response
+after all inline comments or mark each inline comment <em>Done</em>.</li>
+<li>Perform a review that reply&#8217;s to the reviewers comments and summarizes what
+will be coming in the next patch set before submitting the next patch set.</li>
+<li>Use <cite>git commit -a &#8211;amend</cite> to add changes to a commit that address reviewer
+comments.</li>
+<li>Remember to leave the Change-Id in the last line of the commit message.</li>
+<li>Push the new patch set with <cite>git gerrit-push</cite>.</li>
+</ul>
 </div>
 <div class="section" id="video">
 <h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
-<iframe src="http://www.youtube.com/embed/ScfQH4lzDaY" style="border: 0; height: 345px; width: 560px">
+<iframe src="http://www.youtube.com/embed/Ie3STRhq824" style="border: 0; height: 345px; width: 560px">
 </iframe></div>
 <div class="section" id="see-also">
 <h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../AddBinaryDataToAPatch/index.html#add-binary-data-to-a-patch"><em>Add Binary Data to a Patch</em></a></li>
-<li><a class="reference internal" href="../DevelopmentRepositorySetup/index.html#development-repository-setup"><em>Development Repository Setup</em></a></li>
+<li><a class="reference internal" href="../SubmitAPatchToGerrit/index.html#submit-a-patch-to-gerrit"><em>Submit a Patch to Gerrit</em></a></li>
 <li><a class="reference internal" href="../PerformAGerritReview/index.html#perform-a-gerrit-review"><em>Perform a Gerrit Review</em></a></li>
 </ul>
 </div>
@@ -91,9 +99,9 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Submit a Patch to Gerrit</a><ul>
+<li><a class="reference internal" href="#">Respond to Gerrit Comments</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#more-information">More information</a></li>
+<li><a class="reference internal" href="#workflow-tips-for-responding-to-code-reviews">Workflow tips for responding to code reviews</a></li>
 <li><a class="reference internal" href="#video">Video</a></li>
 <li><a class="reference internal" href="#see-also">See also</a></li>
 </ul>
@@ -101,14 +109,14 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../RespondToGerritComments/index.html"
-                        title="previous chapter">Respond to Gerrit Comments</a></p>
+  <p class="topless"><a href="../PerformAGerritReview/index.html"
+                        title="previous chapter">Perform a Gerrit Review</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../StyleCheckITKWithKWStyle/index.html"
-                        title="next chapter">Style Check ITK with KWStyle</a></p>
+  <p class="topless"><a href="../SubmitAPatchToGerrit/index.html"
+                        title="next chapter">Submit a Patch to Gerrit</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/CommunitySoftwareProcess/SubmitAPatchToGerrit/index.txt"
+    <li><a href="../../_sources/CommunitySoftwareProcess/RespondToGerritComments/index.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -135,10 +143,10 @@ lifecycle, such as <a class="reference internal" href="../DevelopmentRepositoryS
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../StyleCheckITKWithKWStyle/index.html" title="Style Check ITK with KWStyle"
+          <a href="../SubmitAPatchToGerrit/index.html" title="Submit a Patch to Gerrit"
              >next</a> |</li>
         <li class="right" >
-          <a href="../RespondToGerritComments/index.html" title="Respond to Gerrit Comments"
+          <a href="../PerformAGerritReview/index.html" title="Perform a Gerrit Review"
              >previous</a> |</li>
         <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Community Software Process</a> &raquo;</li> 
