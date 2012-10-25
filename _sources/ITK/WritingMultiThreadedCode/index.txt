@@ -1,0 +1,69 @@
+.. index:: multi-threading
+
+.. _Writing Multi-Threaded Code:
+
+Writing Multi-Threaded Code
+===========================
+
+Description
+-----------
+  In this session, we discuss how to write multi-threaded (native OS CPU threads)
+  ITK code.
+
+Introduction
+------------
+
+Writing parallel algorithms to take advantage of multi-processor or multi-core
+systems can significantly improve the algorithms speed (although there are
+exceptions!).  In image analysis, we often encounter `embarrassingly parallel`_
+problems.  For example, every output pixel of an algorithm can often be computed
+independently from the other output pixels.
+
+In an `itk::ImageToImageFilter`_
+--------------------------------
+
+.. figure:: Threading.gif
+  :align: center
+
+  CPU-based threading in a shared-memory SMP architecture.
+
+A multithreaded filter provides an implementation of the ThreadedGenerateData()
+method (see itk::ImageSource::ThreadedGenerateData()) as opposed to the normal
+single threaded GenerateData() method (see itk::ImageSource::GenerateData()). A
+superclass of the filter will spawn several threads (usually matching the number
+of processors in the system) and call ThreadedGenerateData() in each thread
+specifying the portion of the output that a given thread is responsible for
+generating. For instance, on a dual processor computer, an image processing
+filter will spawn two threads, each processing thread will generate one half of
+the output image, and each thread is restricted to writing to separate portions
+of the output image. Note that the "entire" input and "entire" output images
+(i.e. what would be available normally to the GenerateData() method, see the
+discussion on Streaming) are available to each call of ThreadedGenerateData().
+Each thread is allowed to read from anywhere in the input image but each thread
+can only write to its designated portion of the output image.
+
+The output image is a single contiguous block on memory that is used for all
+processing threads. Each thread is informed which pixels they are responsible
+for producing the output values. All the threads write to this same block of
+memory but a given thread is only allowed to set specific pixels.
+
+With the `itk::DomainThreader`_
+-------------------------------
+
+With the `itk::MultiThreader`_
+------------------------------
+
+The `itk::MultiThreader`_
+
+
+Video
+-----
+
+See also
+--------
+
+* `ITK Doxygen Threading Documentation`_
+
+.. _embarrassingly parallel: http://en.wikipedia.org/wiki/Embarrassingly_parallel
+.. _ITK Doxygen Threading Documentation: http://www.itk.org/Doxygen/html/ThreadingPage.html
+.. _`itk::ImageToImageFilter`: http://www.itk.org/Doxygen/html/classitk_1_1ImageToImageFilter.html

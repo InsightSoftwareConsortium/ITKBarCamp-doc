@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing Multi-Threaded Code &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="writing-multi-threaded-code">
+<span id="index-0"></span><span id="id1"></span><h1>Writing Multi-Threaded Code<a class="headerlink" href="#writing-multi-threaded-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>In this session, we discuss how to write multi-threaded (native OS CPU threads)
+ITK code.</div></blockquote>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Writing parallel algorithms to take advantage of multi-processor or multi-core
+systems can significantly improve the algorithms speed (although there are
+exceptions!).  In image analysis, we often encounter <a class="reference external" href="http://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly parallel</a>
+problems.  For example, every output pixel of an algorithm can often be computed
+independently from the other output pixels.</p>
+</div>
+<div class="section" id="in-an-itk-imagetoimagefilter">
+<h2>In an <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageToImageFilter.html">itk::ImageToImageFilter</a><a class="headerlink" href="#in-an-itk-imagetoimagefilter" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/Threading.gif" src="../../_images/Threading.gif" />
+<p class="caption">CPU-based threading in a shared-memory SMP architecture.</p>
+</div>
+<p>A multithreaded filter provides an implementation of the ThreadedGenerateData()
+method (see itk::ImageSource::ThreadedGenerateData()) as opposed to the normal
+single threaded GenerateData() method (see itk::ImageSource::GenerateData()). A
+superclass of the filter will spawn several threads (usually matching the number
+of processors in the system) and call ThreadedGenerateData() in each thread
+specifying the portion of the output that a given thread is responsible for
+generating. For instance, on a dual processor computer, an image processing
+filter will spawn two threads, each processing thread will generate one half of
+the output image, and each thread is restricted to writing to separate portions
+of the output image. Note that the &#8220;entire&#8221; input and &#8220;entire&#8221; output images
+(i.e. what would be available normally to the GenerateData() method, see the
+discussion on Streaming) are available to each call of ThreadedGenerateData().
+Each thread is allowed to read from anywhere in the input image but each thread
+can only write to its designated portion of the output image.</p>
+<p>The output image is a single contiguous block on memory that is used for all
+processing threads. Each thread is informed which pixels they are responsible
+for producing the output values. All the threads write to this same block of
+memory but a given thread is only allowed to set specific pixels.</p>
+</div>
+<div class="section" id="with-the-itk-domainthreader">
+<h2>With the <a href="#id2"><span class="problematic" id="id3">`itk::DomainThreader`_</span></a><a class="headerlink" href="#with-the-itk-domainthreader" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="with-the-itk-multithreader">
+<h2>With the <a href="#id4"><span class="problematic" id="id5">`itk::MultiThreader`_</span></a><a class="headerlink" href="#with-the-itk-multithreader" title="Permalink to this headline">¶</a></h2>
+<p>The <a href="#id6"><span class="problematic" id="id7">`itk::MultiThreader`_</span></a></p>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.itk.org/Doxygen/html/ThreadingPage.html">ITK Doxygen Threading Documentation</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Writing Multi-Threaded Code</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#in-an-itk-imagetoimagefilter">In an itk::ImageToImageFilter</a></li>
+<li><a class="reference internal" href="#with-the-itk-domainthreader">With the `itk::DomainThreader`_</a></li>
+<li><a class="reference internal" href="#with-the-itk-multithreader">With the `itk::MultiThreader`_</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+<li><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/ITK/WritingMultiThreadedCode/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

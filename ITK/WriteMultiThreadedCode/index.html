@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Write Multi-Threaded Code &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
+    <link rel="up" title="ITK" href="../index.html" />
+    <link rel="next" title="Video Processing Using ITKVideoBridgeOpenCV module" href="../VideoProcessingUsingOpenCVBridge/index.html" />
+    <link rel="prev" title="What’s New in Release 4.2.1" href="../WhatsNewInRelease4.2.1.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../VideoProcessingUsingOpenCVBridge/index.html" title="Video Processing Using ITKVideoBridgeOpenCV module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../WhatsNewInRelease4.2.1.html" title="What’s New in Release 4.2.1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">ITK</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="write-multi-threaded-code">
+<span id="writing-multi-threaded-code"></span><span id="index-0"></span><h1>Write Multi-Threaded Code<a class="headerlink" href="#write-multi-threaded-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>In this session, we discuss how to write multi-threaded
+ITK code that uses native operating system CPU threads.</div></blockquote>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Writing parallel algorithms to take advantage of multi-processor or multi-core
+systems can significantly improve the algorithms speed (although there are
+exceptions!).  In image analysis, we often encounter <a class="reference external" href="http://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly parallel</a>
+problems.  For example, every output pixel of an algorithm can often be computed
+independently from the other output pixels.</p>
+</div>
+<div class="section" id="in-an-itk-imagetoimagefilter">
+<h2>In an <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageToImageFilter.html">itk::ImageToImageFilter</a><a class="headerlink" href="#in-an-itk-imagetoimagefilter" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/Threading.gif" src="../../_images/Threading.gif" />
+<p class="caption">CPU-based threading in a shared-memory SMP architecture.</p>
+</div>
+<p>The output image is a single contiguous block on memory that is used for all
+processing threads. Each thread is informed which pixels they are responsible
+for producing the output values. All the threads write to this same block of
+memory but a given thread is only allowed to set specific pixels.</p>
+<p>A multi-threaded filter provides an implementation of the
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a> method as opposed to the normal single threaded
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a2f5a02af541f7004f56f66f07c0931f1">GenerateData()</a> method. A superclass of the filter will spawn several threads
+(usually matching the number of processors in the system) and call
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a> in each thread specifying the portion of the output
+that a given thread is responsible for generating. For instance, on a dual
+processor computer, an image processing filter will spawn two threads, each
+processing thread will generate one half of the output image, and each thread is
+restricted to writing to separate portions of the output image. Note that the
+&#8220;entire&#8221; input and &#8220;entire&#8221; output images (i.e. what would be available normally
+to the <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a2f5a02af541f7004f56f66f07c0931f1">GenerateData()</a> method whether or not streaming is being peformed) are
+available to each call of <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a>.  Each thread is allowed to
+read from anywhere in the input image but each thread can only write to its
+designated portion of the output image.</p>
+<p>When writing a threaded filter, the <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a> method must be
+<a class="reference external" href="http://en.wikipedia.org/wiki/Thread_safety">thread-safe</a>.  Thread safety requires that multiple threads do not write to the
+same location in memory at the same time.  To avoid this problem, <a class="reference external" href="http://en.wikipedia.org/wiki/Thread-local_storage">thread-local
+storage</a> is often used.  Intermediate results are written to thread-local data
+structures then merged in a single-threaded way after parallel processing.
+To facilitate this common strategy, the <a class="reference external" href="http://itk.org/gitweb?p=ITK.git;a=blob;f=Modules/Core/Common/include/itkImageSource.hxx;h=b52b4949e68ad311e307c93b0ec25aa93704bdf3;hb=HEAD#l251">default ImageSource implementation of
+GenerateData()</a> also runs a <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a3feaf3f80b0339277b2f3502140031f8">BeforeThreadedGenerateData()</a> and
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#ac1967c5c2e3cbdbf5ae6d1f6c916790d">AfterThreadedGenerateData()</a> method, which are null by default.  To use
+<a class="reference external" href="http://en.wikipedia.org/wiki/Thread-local_storage">thread-local storage</a>, create the thread-specific data structures in
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a3feaf3f80b0339277b2f3502140031f8">BeforeThreadedGenerateData()</a> and merge the results in
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#ac1967c5c2e3cbdbf5ae6d1f6c916790d">AfterThreadedGenerateData()</a>.  For an example see the <a class="reference external" href="http://itk.org/gitweb?p=ITK.git;a=blob;f=Modules/Filtering/ImageStatistics/include/itkMinimumMaximumImageFilter.hxx;h=d6e0fca1a404e3507cbcbac3ade68ab6e90706d1;hb=HEAD">implementation of the
+itk::MinimumMaximumImageFilter</a>.</p>
+<p><a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a3feaf3f80b0339277b2f3502140031f8">BeforeThreadedGenerateData()</a> is also commonly used to perform single-threaded
+processing to prepare for the <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a> call.</p>
+</div>
+<div class="section" id="with-itk-domainthreader">
+<h2>With <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a><a class="headerlink" href="#with-itk-domainthreader" title="Permalink to this headline">¶</a></h2>
+<p>While the <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html#a75fd7bc20cc74d5afcfc339f742247f3">ThreadedGenerateData()</a> method in an <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageToImageFilter.html">itk::ImageToImageFilter</a>
+make most <a class="reference external" href="http://en.wikipedia.org/wiki/Data_parallelism">data-parallel</a> operations easy to code, it does not fit our needs.
+We may want to:</p>
+<ul class="simple">
+<li>Perform more than one multi-threaded operation in a filter.</li>
+<li>Split our data into something other than <cite>itk::ImageRegion</cite>&#8216;s.</li>
+<li>Do multi-threading outside an <cite>itk::ImageSource</cite>.</li>
+</ul>
+<p>The <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a> class overcomes these limitations.</p>
+<p>It is possible to have more than one <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a> member in a class,
+so it is possible to perform multiple different multi-threaded operations in a
+single filter <cite>Update()</cite>.  The multi-threaded operations can be performed
+multiple times within a loop, be conditionally performed, etc.</p>
+<p>The <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a> class is templated over the data domain to be
+split/partitioned, so it can operate on <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ThreadedImageRegionPartitioner.html">itk::ImageRegion&#8217;s like
+ThreadedGenerateData()</a> but also <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ThreadedIndexedContainerPartitioner.html">index ranges in an itk::Array</a> or <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ThreadedIteratorRangePartitioner.html">a range
+specified by Standard Library iterators</a> depending on which class is selected
+to partition the domain.</p>
+<p>The <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a> class structure is similar to the <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html">itk::ImageSource</a>
+structure.  The analog of <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageSource.html">itk::ImageSource</a>&#8216;s:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">BeforeThreadedGenerateData</span><span class="p">()</span>
+<span class="n">ThreadedGenerateData</span><span class="p">(</span> <span class="k">const</span> <span class="n">OutputImageRegionType</span> <span class="o">&amp;</span> <span class="n">outputRegionForThread</span><span class="p">,</span> <span class="n">ThreadIdType</span> <span class="n">threadId</span> <span class="p">)</span>
+<span class="n">AfterThreadedGenerateData</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>in <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a> are the:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">BeforeThreadedExecution</span><span class="p">()</span>
+<span class="n">ThreadedExecution</span><span class="p">(</span> <span class="k">const</span> <span class="n">DomainType</span> <span class="o">&amp;</span> <span class="n">subDomain</span><span class="p">,</span> <span class="k">const</span> <span class="n">ThreadIdType</span> <span class="n">threadId</span> <span class="p">)</span>
+<span class="n">AfterThreadedExecution</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>methods.</p>
+<p>To use <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a>, create a Threader subclass of
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a>.  This subclass will be templated over <em>TAssociate</em>, the
+type of the class that will use the new subclass to perform the multi-threaded
+operation.  The <em>Associate</em> class should declare and instantiate a member
+<em>Threader</em>.  The type of the Threader will be templated with the Associate&#8217;s
+<em>Self</em> type.  The Associate will also declare the <em>Threader</em> a <a class="reference external" href="http://en.wikipedia.org/wiki/Friend_class">friend class</a>,
+so that it can access its private and protected members with
+<em>this-&gt;m_Associate-&gt;m_AssociateMemberName</em>.  When the Associate wants to perform
+the multi-threaded operation, it will call <cite>Execute( this, completeDomain )</cite> on
+the member Threader.</p>
+<p>A <a class="reference external" href="file:///home/matt/progs/itk_examples_build/html/Examples/Core/Common/DoDataParallelThreading/DoDataParallelThreading.html">cell counting example</a> can be found in the ITKExamples project.</p>
+</div>
+<div class="section" id="with-itk-multithreader">
+<h2>With <a class="reference external" href="http://www.itk.org/Doxygen/html/itkMultiThreader_8h_source.html">itk::MultiThreader</a><a class="headerlink" href="#with-itk-multithreader" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://www.itk.org/Doxygen/html/itkMultiThreader_8h_source.html">itk::MultiThreader</a> can be used to manually spawn and terminate your own
+methods to operate on threads in a platform-independent way.  However, there is
+much more code overhead and opportunity for errors compared to
+<a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1ImageToImageFilter.html">itk::ImageToImageFilter</a> or <a class="reference external" href="http://www.itk.org/Doxygen/html/classitk_1_1DomainThreader.html">itk::DomainThreader</a>.  For an example that
+applies <a class="reference external" href="http://www.itk.org/Doxygen/html/itkMultiThreader_8h_source.html">itk::MultiThreader</a> directly, see <a class="reference external" href="http://itk.org/gitweb?p=ITK.git;a=blob;f=Modules/Filtering/ImageFeature/include/itkCannyEdgeDetectionImageFilter.hxx;h=a10756b741851f8611c2ead7358f6595027a5b48;hb=HEAD#l218">the implementation of the
+CannyEdgeDetectionImageFilter</a>.</p>
+<p>Static methods on <a class="reference external" href="http://www.itk.org/Doxygen/html/itkMultiThreader_8h_source.html">itk::MultiThreader</a> can also be used to control default
+number of threads or a global maximum number of threads. When writing filters
+designed to work with other processors or future processors, however, care
+should be taken to avoid hard-coding the number of threads utilized.</p>
+<p>Setting the default global number of threads to one can be useful when writing
+or debugging multi-threaded code.  The static method on <a class="reference external" href="http://www.itk.org/Doxygen/html/itkMultiThreader_8h_source.html">itk::MultiThreader</a>
+can be used or the environmental variable <em>ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS</em>
+can be set to <em>1</em> to achieve the desired effect.</p>
+</div>
+<div class="section" id="locking-classes">
+<h2>Locking classes<a class="headerlink" href="#locking-classes" title="Permalink to this headline">¶</a></h2>
+<p>Note that ITK has a few classes to perform thread synchronization, such as the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Thread-local_storage">itk::SimpleFastMutexLock</a>, but these should be avoided if possible because of
+performance reasons.</p>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.itk.org/Doxygen/html/ThreadingPage.html">ITK Doxygen Threading Documentation</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Write Multi-Threaded Code</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#in-an-itk-imagetoimagefilter">In an itk::ImageToImageFilter</a></li>
+<li><a class="reference internal" href="#with-itk-domainthreader">With itk::DomainThreader</a></li>
+<li><a class="reference internal" href="#with-itk-multithreader">With itk::MultiThreader</a></li>
+<li><a class="reference internal" href="#locking-classes">Locking classes</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+<li><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../WhatsNewInRelease4.2.1.html"
+                        title="previous chapter">What&#8217;s New in Release 4.2.1</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../VideoProcessingUsingOpenCVBridge/index.html"
+                        title="next chapter">Video Processing Using ITKVideoBridgeOpenCV module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/ITK/WriteMultiThreadedCode/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../VideoProcessingUsingOpenCVBridge/index.html" title="Video Processing Using ITKVideoBridgeOpenCV module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../WhatsNewInRelease4.2.1.html" title="What’s New in Release 4.2.1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >ITK</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
