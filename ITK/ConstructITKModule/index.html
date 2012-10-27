@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to construct an ITK module &mdash; ITKBarCamp  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/itk.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="top" title="ITKBarCamp  documentation" href="../../index.html" />
+    <link rel="up" title="ITK" href="../index.html" />
+    <link rel="next" title="Wanted Sessions" href="../Wanted.html" />
+    <link rel="prev" title="Video Processing Using ITKVideoBridgeOpenCV module" href="../VideoProcessingUsingOpenCVBridge/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../Wanted.html" title="Wanted Sessions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../VideoProcessingUsingOpenCVBridge/index.html" title="Video Processing Using ITKVideoBridgeOpenCV module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">ITK</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-construct-an-itk-module">
+<span id="index-0"></span><h1>How to construct an ITK module<a class="headerlink" href="#how-to-construct-an-itk-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Modularized ITK v4</li>
+<li>Modularization are done by CMake magics</li>
+<li>Key CMake code to construct an ITK module</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>More details about modularization, please refer to  the wiki page:</dt>
+<dd><a class="reference external" href="http://www.itk.org/Wiki/ITK_Release_4/Modularization">http://www.itk.org/Wiki/ITK_Release_4/Modularization</a></dd>
+</dl>
+</div>
+<div class="section" id="module-template">
+<h2>Module template<a class="headerlink" href="#module-template" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="docutils">
+<dt>Here is a template module to download (thanks to Bradley Lowekamp):</dt>
+<dd>git clone <a class="reference external" href="https://github.com/blowekamp/itkExternalTemplate.git">https://github.com/blowekamp/itkExternalTemplate.git</a></dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p><em>CMakeLists.txt</em></p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="nb">project</span><span class="p">(</span><span class="s">ITKExternalTemplate</span><span class="p">)</span>
+<span class="nb">itk_module_impl</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><em>itk-module.cmake</em>:</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="nb">set</span><span class="p">(</span><span class="s">DOCUMENTATION</span> <span class="s2">&quot;This module is for showing ITK module structure purposes.&quot;</span><span class="p">)</span>
+
+<span class="c"># itk_module() defines the module dependencies in ITKExternalTemplate;</span>
+<span class="c"># ITKExternalTemplate depends on ITKCommon;</span>
+<span class="c"># The testing module in ITKExternalTemplate depends on ITKTestKernel,</span>
+<span class="c"># and ITKMetaIO for image IO (besides ITKExternalTemplate itself)</span>
+
+<span class="nb">itk_module</span><span class="p">(</span><span class="s">ITKExternalTemplate</span>
+  <span class="s">DEPENDS</span>
+    <span class="s">ITKCommon</span>
+  <span class="s">TEST_DEPENDS</span>
+    <span class="s">ITKTestKernel</span>
+    <span class="s">ITKMetaIO</span>
+  <span class="s">DESCRIPTION</span>
+    <span class="s2">&quot;${DOCUMENTATION}&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><em>src/CMakeLists.txt</em></p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="c">#${itk-module} will be the name of this module and will not need to be</span>
+<span class="c">#changed when this module is renamed.</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span><span class="s">_SRC</span>
+<span class="s">itkSomeFile.cxx</span>
+<span class="p">)</span>
+
+<span class="nb">add_library</span><span class="p">(</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span> <span class="o">${</span><span class="nv">${itk-module</span><span class="o">}</span><span class="s">_SRC}</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span>  <span class="o">${</span><span class="nv">${itk-module</span><span class="o">}</span><span class="s">_LIBRARIES}</span><span class="p">)</span>
+<span class="nb">itk_module_target</span><span class="p">(</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>test/CMakeLists.txt</em></p>
+<div class="highlight-cmake"><div class="highlight"><pre><span class="nb">itk_module_test</span><span class="p">()</span>
+
+<span class="c">#${itk-module} will be the name of this module and will not need to be</span>
+<span class="c">#changed when this module is renamed.</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">ITK</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span><span class="s">Tests</span>
+  <span class="s">itkEmptyTest.cxx</span>
+<span class="p">)</span>
+
+<span class="nb">CreateTestDriver</span><span class="p">(</span><span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span>  <span class="s2">&quot;${${itk-module}-Test_LIBRARIES}&quot;</span> <span class="s2">&quot;${ITK${itk-module}Tests}&quot;</span><span class="p">)</span>
+
+<span class="nb">itk_add_test</span><span class="p">(</span><span class="s">NAME</span> <span class="s">itkDeleteMeEmptyTest</span>
+  <span class="s">COMMAND</span> <span class="o">${</span><span class="nv">itk-module</span><span class="o">}</span><span class="s">TestDriver</span> <span class="s">itkEmptyTest</span> <span class="s2">&quot;argument1&quot;</span> <span class="s2">&quot;...&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="video">
+<h2>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+<iframe src="http://www.youtube.com/embed/vY42uhz1hTk" style="border: 0; height: 345px; width: 560px">
+</iframe></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to construct an ITK module</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#module-template">Module template</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../VideoProcessingUsingOpenCVBridge/index.html"
+                        title="previous chapter">Video Processing Using ITKVideoBridgeOpenCV module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../Wanted.html"
+                        title="next chapter">Wanted Sessions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/ITK/ConstructITKModule/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../Wanted.html" title="Wanted Sessions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../VideoProcessingUsingOpenCVBridge/index.html" title="Video Processing Using ITKVideoBridgeOpenCV module"
+             >previous</a> |</li>
+        <li><a href="../../index.html">ITKBarCamp  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >ITK</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, InsightSoftwareConsortium.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
