@@ -1,0 +1,27 @@
+.. index:: Gerrit
+
+.. _Get a Patch Merged:
+
+Get a Patch Merged
+==================
+
+Description
+-----------
+  In this section, we discuss how to get a patch merged into the ITK repository.
+
+Introduction
+------------
+
+The Insight Toolkit is a project developed by the ITK Community and for the ITK
+Community.  If a community member is willing and able to fix a bug or add a
+feature to the toolkit, they are encouraged to do so.  With the Git/Gerrit
+distributed version control and code review system, any community member can
+perform 95% of the effort required to get an improvement merged into the toolkit.
+The last 5% of the effort, a final review and merge, will be granted to
+community members that have considerable experience in the contribution
+mechanisms of the project.  In this session, we discuss strategies to make that
+last 5% happen and see a patch merged into the *master* branch of the ITK
+repository.
+
+Methods to get a patch merged
+-----------------------------
